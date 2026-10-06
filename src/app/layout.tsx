@@ -5,9 +5,10 @@ import { Footer } from "@/components/footer/Footer";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "mrz-lake.vercel.app";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.mrzuae.com"),
+  metadataBase: new URL(`https://${siteUrl}`),
   title: "MRZ Management Services FZE LLC | UAE Business, Trading, IT & Consultancy Services",
   description:
     "MRZ Management Services FZE LLC provides commercial brokerage, general trading, IT consultancy, cyber security architecture, accounting & bookkeeping, HR consultancy and UAE documents clearing services.",
