@@ -1,0 +1,291 @@
+/* ===================================================== Frequently asked Qs */
+
+.faqs {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --gold: #dca958;
+  --gold-soft: #ecc982;
+  --ice: #bfe6ff;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(72px, 10vh, 128px) 0;
+  background:
+    radial-gradient(70% 55% at 85% 2%, rgba(16, 36, 100, 0.48), transparent 60%),
+    linear-gradient(180deg, #060c24 0%, #050a1c 100%);
+}
+
+.faqs::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(220, 169, 88, 0.4), transparent);
+}
+
+.blobRoyal,
+.blobGold {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(95px);
+  pointer-events: none;
+}
+
+.blobRoyal {
+  top: 6%;
+  left: -8%;
+  width: 460px;
+  height: 460px;
+  background: radial-gradient(circle, rgba(36, 83, 214, 0.42), transparent 70%);
+}
+
+.blobGold {
+  right: -8%;
+  bottom: 4%;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(220, 169, 88, 0.22), transparent 70%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  width: min(880px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+/* ------------------------------------------------------------------- head */
+
+.head {
+  text-align: center;
+  margin-bottom: clamp(32px, 5vw, 52px);
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 16px;
+  color: var(--gold-soft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.kickerDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px rgba(220, 169, 88, 0.9);
+}
+
+.title {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: clamp(28px, 3.4vw, 46px);
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.titleAccent {
+  background: linear-gradient(100deg, var(--ice) 0%, #8fb2ff 45%, var(--gold-soft) 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lead {
+  margin: 18px auto 0;
+  max-width: 54ch;
+  color: #a7b4cb;
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.leadLink {
+  color: var(--gold-soft);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(236, 201, 130, 0.4);
+  transition: border-color 0.25s var(--ease);
+}
+
+.leadLink:hover {
+  border-color: var(--gold-soft);
+}
+
+.leadLink:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: 3px;
+}
+
+/* ------------------------------------------------------------------- list */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  position: relative;
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.09);
+  transition: box-shadow 0.35s var(--ease), background-color 0.35s var(--ease);
+}
+
+.item[data-open] {
+  background: linear-gradient(160deg, rgba(36, 83, 214, 0.16), rgba(255, 255, 255, 0.02));
+  box-shadow:
+    inset 0 0 0 1px rgba(220, 169, 88, 0.4),
+    0 26px 52px -32px rgba(2, 6, 30, 0.9);
+}
+
+/* travelling-colour border that lights up when the question is open */
+.item[data-open]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  padding: 1.6px;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--border-angle),
+    transparent 0deg,
+    var(--ice) 60deg,
+    var(--gold-soft) 120deg,
+    transparent 190deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: borderTravel 4.5s linear infinite;
+}
+
+.item:hover:not([data-open]) {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+
+.qHead {
+  margin: 0;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  padding: 20px clamp(18px, 2.4vw, 26px);
+  border: 0;
+  background: none;
+  text-align: left;
+  color: var(--text-strong);
+  font-family: inherit;
+  font-size: clamp(15.5px, 1.5vw, 18px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+}
+
+.trigger:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: 16px;
+}
+
+.qText {
+  flex: 1;
+  line-height: 1.45;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: var(--gold-soft);
+  background: rgba(220, 169, 88, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(220, 169, 88, 0.28);
+  transition: transform 0.35s var(--ease), background-color 0.35s var(--ease), color 0.35s var(--ease);
+}
+
+.item[data-open] .icon {
+  /* vertical bar fades out and the icon spins a half-turn, ending as a clean
+     horizontal minus (not a diagonal) */
+  transform: rotate(180deg);
+  color: #0a1230;
+  background: var(--gold-soft);
+}
+
+/* the vertical bar of the plus collapses as it rotates into a minus */
+.plusBar {
+  transform-origin: center;
+  transition: opacity 0.35s var(--ease);
+}
+
+.item[data-open] .plusBar {
+  opacity: 0;
+}
+
+/* ------------------------------------------------------------------ panel */
+
+.panel {
+  overflow: hidden;
+}
+
+.answer {
+  margin: 0;
+  padding: 0 clamp(18px, 2.4vw, 26px) 22px;
+  max-width: 68ch;
+  color: #b4c0d6;
+  font-size: clamp(14px, 1.15vw, 15.5px);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------- responsive */
+
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .icon,
+  .plusBar,
+  .leadLink {
+    transition: none;
+  }
+
+  .item[data-open]::after {
+    animation: none;
+  }
+}
+
+/* registered so the conic angle can be animated on the GPU-cheap path */
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes borderTravel {
+  to {
+    --border-angle: 360deg;
+  }
+}

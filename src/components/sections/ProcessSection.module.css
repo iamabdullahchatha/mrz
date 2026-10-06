@@ -1,0 +1,371 @@
+/* ============================================================== Our process */
+
+.process {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --gold: #dca958;
+  --gold-soft: #ecc982;
+  --ice: #bfe6ff;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(78px, 11vh, 136px) 0 clamp(84px, 12vh, 140px);
+  background:
+    radial-gradient(72% 60% at 85% 6%, rgba(16, 36, 100, 0.4), transparent 60%),
+    linear-gradient(180deg, #05091a 0%, #060c24 100%);
+}
+
+.process::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(220, 169, 88, 0.4), transparent);
+}
+
+.blobRoyal,
+.blobGold {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(95px);
+  pointer-events: none;
+}
+
+.blobRoyal {
+  top: 8%;
+  left: -6%;
+  width: 460px;
+  height: 460px;
+  background: radial-gradient(circle, rgba(36, 83, 214, 0.44), transparent 70%);
+}
+
+.blobGold {
+  right: -7%;
+  bottom: 2%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(220, 169, 88, 0.22), transparent 70%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  width: min(1240px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+/* ------------------------------------------------------------------- header */
+
+.head {
+  max-width: 680px;
+  margin: 0 auto clamp(46px, 7vh, 80px);
+  text-align: center;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 16px;
+  color: var(--gold-soft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.kickerDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px rgba(220, 169, 88, 0.9);
+}
+
+.title {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: clamp(28px, 3.4vw, 46px);
+  font-weight: 650;
+  line-height: 1.07;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.titleAccent {
+  background: linear-gradient(100deg, var(--ice) 0%, #8fb2ff 45%, var(--gold-soft) 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lead {
+  margin: 18px auto 0;
+  max-width: 56ch;
+  color: #a7b4cb;
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+
+/* ----------------------------------------------------------------- timeline */
+
+.timeline {
+  position: relative;
+  width: min(920px, 100%);
+  margin-inline: auto;
+}
+
+.steps {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(26px, 4.4vh, 58px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- the centre rail with its scroll-driven gold fill ---- */
+
+.rail {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.railBase {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.railFill {
+  position: absolute;
+  inset: 0;
+  transform-origin: center top;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--gold), var(--gold-soft));
+  box-shadow: 0 0 12px rgba(220, 169, 88, 0.6);
+}
+
+/* ---- one step row: card | centre (node) | card ---- */
+
+.step {
+  display: grid;
+  grid-template-columns: 1fr 64px 1fr;
+  align-items: center;
+}
+
+.center {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+/* The wrapper holds the grid placement + the scroll-reveal transform and sets
+   the perspective the inner TiltCard rotates within. Keeping placement here (not
+   on .card) lets the TiltCard own .card's transform without fighting the reveal. */
+.cardWrap {
+  position: relative;
+  grid-row: 1;
+  width: 100%;
+  max-width: 400px;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+.left .cardWrap {
+  grid-column: 1;
+  margin-left: auto;
+}
+
+.right .cardWrap {
+  grid-column: 3;
+  margin-right: auto;
+}
+
+.left .card {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.right .card {
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* ---- step card ---- */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  width: 100%;
+  padding: clamp(20px, 1.9vw, 26px) clamp(18px, 1.7vw, 24px);
+  border-radius: 18px;
+  /* Baked frosted glass — NO live backdrop-filter. These cards also transform in
+     and out as you scroll, so a live blur meant re-rasterising the backdrop on
+     every frame of every reveal — a prime stutter source. A touch more opaque
+     than the other sections because the cards sit near the bright centre rail. */
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.022)),
+    linear-gradient(160deg, rgba(28, 42, 86, 0.72), rgba(12, 20, 48, 0.72));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 30px 60px -34px rgba(2, 6, 30, 0.9);
+  transform-style: preserve-3d;
+}
+
+/* connector from the card across to the node on the rail */
+.card::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 32px;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.left .card::after {
+  right: -32px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(220, 169, 88, 0.55));
+}
+
+.right .card::after {
+  left: -32px;
+  background: linear-gradient(90deg, rgba(220, 169, 88, 0.55), rgba(255, 255, 255, 0.14));
+}
+
+.no {
+  position: absolute;
+  top: 12px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: rgba(236, 201, 130, 0.22);
+}
+
+.left .no {
+  left: 18px;
+}
+
+.right .no {
+  right: 18px;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 15px;
+  color: #fff;
+  background: linear-gradient(145deg, #2a5be0, #0a2a88);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 0 0 1px rgba(236, 201, 130, 0.25),
+    0 12px 22px -10px rgba(36, 83, 214, 0.9);
+}
+
+.stepTitle {
+  margin: 2px 0 0;
+  color: var(--text-strong);
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.stepText {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+/* ---- node (circle on the rail) ---- */
+
+.node {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, var(--gold-soft), var(--gold) 70%);
+  box-shadow:
+    0 0 0 5px rgba(220, 169, 88, 0.14),
+    0 0 16px rgba(220, 169, 88, 0.7);
+  z-index: 2;
+}
+
+/* ------------------------------------------------------------- responsive */
+
+@media (max-width: 760px) {
+  .rail {
+    left: 22px;
+    transform: none;
+  }
+
+  .steps {
+    gap: clamp(22px, 6vw, 32px);
+  }
+
+  .step {
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: stretch;
+  }
+
+  .center {
+    grid-column: 1;
+  }
+
+  .left .cardWrap,
+  .right .cardWrap {
+    grid-column: 2;
+    margin: 0;
+    max-width: none;
+  }
+
+  .left .card,
+  .right .card {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  /* connector bridges the rail (x=22) across to the card edge (card starts at
+     x=58: 44px rail column + 14px gap), level with the node at card centre. */
+  .left .card::after,
+  .right .card::after {
+    left: -36px;
+    right: auto;
+    width: 36px;
+    background: linear-gradient(90deg, rgba(220, 169, 88, 0.55), rgba(255, 255, 255, 0.14));
+  }
+
+  .left .no,
+  .right .no {
+    left: auto;
+    right: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardWrap {
+    will-change: auto;
+  }
+}

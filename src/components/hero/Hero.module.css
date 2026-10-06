@@ -1,0 +1,1157 @@
+/* ============================================================ 3D deck hero */
+
+.hero {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --gold: #dca958;
+  --gold-soft: #ecc982;
+  --ice: #bfe6ff;
+  --royal: #2453d6;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  padding-top: clamp(110px, 14vh, 150px);
+  background:
+    radial-gradient(120% 80% at 70% 10%, #0d1a46 0%, transparent 60%),
+    linear-gradient(180deg, #060b22 0%, #08102c 55%, #050918 100%);
+}
+
+/* ------------------------------------------------------------------ backdrop */
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(38% 34% at 22% 26%, rgba(36, 83, 214, 0.38), transparent 70%),
+    radial-gradient(30% 28% at 78% 30%, rgba(220, 169, 88, 0.2), transparent 70%),
+    radial-gradient(34% 30% at 64% 78%, rgba(64, 140, 255, 0.16), transparent 70%);
+  filter: blur(14px);
+  will-change: transform;
+  animation: auroraDrift 26s ease-in-out infinite alternate;
+}
+
+/* Translate only — scaling a blurred layer re-rasterises it every frame. */
+@keyframes auroraDrift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(3%, -2.5%, 0);
+  }
+}
+
+.beam {
+  position: absolute;
+  top: -30%;
+  right: 8%;
+  width: 46%;
+  height: 120%;
+  background: linear-gradient(180deg, rgba(236, 201, 130, 0.1), rgba(236, 201, 130, 0) 70%);
+  transform: rotate(22deg);
+  transform-origin: top center;
+  filter: blur(26px);
+}
+
+/* receding perspective grid — the "floor" the deck stands on */
+.floorWrap {
+  position: absolute;
+  left: -25%;
+  right: -25%;
+  bottom: 0;
+  height: 58%;
+  perspective: 520px;
+  perspective-origin: 50% 0%;
+}
+
+.floor {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 0%;
+  transform: rotateX(62deg);
+  background-image:
+    linear-gradient(rgba(140, 180, 255, 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140, 180, 255, 0.11) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 60%, transparent 100%);
+}
+
+.noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(140% 110% at 50% 30%, transparent 55%, rgba(2, 5, 18, 0.75) 100%),
+    linear-gradient(to bottom, transparent 75%, rgba(5, 9, 24, 0.9) 100%);
+}
+
+/* -------------------------------------------------------------------- layout */
+
+.inner {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  align-items: center;
+  column-gap: clamp(24px, 4vw, 64px);
+  width: min(1280px, calc(100% - 48px));
+  margin-inline: auto;
+  padding-bottom: clamp(24px, 4vh, 48px);
+}
+
+/* ---------------------------------------------------------------------- copy */
+
+.copy {
+  max-width: 700px;
+}
+
+/* entrance — pure CSS so the headline paints before hydration */
+.copy > * {
+  animation: rise 0.9s var(--ease) both;
+}
+.copy > :nth-child(2) {
+  animation-delay: 0.08s;
+}
+.copy > :nth-child(3) {
+  animation-delay: 0.16s;
+}
+.copy > :nth-child(4) {
+  animation-delay: 0.24s;
+}
+.copy > :nth-child(5) {
+  animation-delay: 0.32s;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+}
+
+.visual {
+  animation: visualIn 1.2s var(--ease) 0.2s both;
+}
+
+@keyframes visualIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.93);
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 7px 14px 7px 10px;
+  border-radius: 999px;
+  color: var(--gold-soft);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: linear-gradient(90deg, rgba(220, 169, 88, 0.14), rgba(220, 169, 88, 0.03));
+  box-shadow: inset 0 0 0 1px rgba(220, 169, 88, 0.32);
+}
+
+.badgeDot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 12px rgba(220, 169, 88, 0.9);
+}
+
+.badgeDot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(220, 169, 88, 0.7);
+  animation: pulse 2.4s var(--ease) infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.title {
+  margin: 22px 0 0;
+  color: var(--text-strong);
+  font-size: clamp(36px, 3.6vw, 58px);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.titleAccent {
+  display: block;
+  padding-bottom: 0.06em;
+  background: linear-gradient(100deg, var(--ice) 0%, #8fb2ff 42%, var(--gold-soft) 88%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sub {
+  max-width: 52ch;
+  margin: 22px 0 0;
+  color: #a7b4cb;
+  font-size: clamp(15px, 1.2vw, 17.5px);
+  line-height: 1.68;
+  text-wrap: pretty;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: clamp(26px, 4vh, 36px);
+}
+
+.primary,
+.secondary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 56px;
+  border-radius: 14px;
+  font-size: 15.5px;
+  font-weight: 600;
+  text-decoration: none;
+  outline: none;
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    background-color 0.35s var(--ease);
+}
+
+.primary {
+  gap: 16px;
+  padding: 0 8px 0 24px;
+  overflow: hidden;
+  color: #fff;
+  background: linear-gradient(180deg, #2a5be0 0%, #0a2a88 100%);
+  box-shadow:
+    0 20px 44px -18px rgba(36, 83, 214, 0.95),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* periodic light sweep across the primary CTA */
+.primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: ctaSweep 5s var(--ease) 1.8s infinite;
+  pointer-events: none;
+}
+
+@keyframes ctaSweep {
+  0%,
+  70% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.primaryIcon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  transition:
+    background-color 0.35s var(--ease),
+    color 0.35s var(--ease);
+}
+
+.primaryIcon svg {
+  transition: transform 0.35s var(--ease);
+}
+
+.primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 26px 52px -18px rgba(36, 83, 214, 1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.primary:hover .primaryIcon {
+  color: #0a1230;
+  background: var(--gold);
+}
+
+.primary:hover .primaryIcon svg {
+  transform: translateX(2px);
+}
+
+.secondary {
+  padding: 0 24px;
+  color: var(--text-strong);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+
+.secondary:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
+
+.primary:focus-visible,
+.secondary:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: clamp(32px, 5vh, 48px) 0 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 4px;
+  padding: 0 clamp(18px, 2.4vw, 32px);
+}
+
+.stat:first-child {
+  padding-left: 0;
+}
+
+.stat + .stat {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.statValue {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: clamp(24px, 2.2vw, 30px);
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.statLabel {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ------------------------------------------------------------- visual column */
+
+.visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.scene {
+  --deck-w: clamp(230px, min(25vw, 40vh), 370px);
+
+  position: relative;
+  width: 100%;
+  height: calc(var(--deck-w) * 1.25 + 170px);
+  perspective: 1500px;
+  perspective-origin: 50% 40%;
+  outline: none;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.scene:focus-visible {
+  border-radius: 24px;
+  box-shadow: var(--focus-ring);
+}
+
+.float {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: floaty 7s ease-in-out infinite;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+
+.rig {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+/* soft coloured light behind the deck */
+.halo {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: calc(var(--deck-w) * 1.9);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 40% 40%, rgba(36, 83, 214, 0.55), transparent 55%),
+    radial-gradient(circle at 65% 65%, rgba(220, 169, 88, 0.32), transparent 55%);
+  filter: blur(36px);
+  transform: translate(-50%, -50%) translateZ(-280px);
+  pointer-events: none;
+}
+
+/* glowing pedestal under the cards */
+.platform {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: calc(var(--deck-w) * 1.3);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) translateY(calc(var(--deck-w) * 0.7 + 4px)) rotateX(78deg);
+  pointer-events: none;
+}
+
+.ringOuter,
+.ringDash,
+.ringInner {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.ringOuter {
+  inset: 0;
+  border: 1px solid rgba(220, 169, 88, 0.5);
+  background: radial-gradient(circle, rgba(36, 83, 214, 0.45) 0%, rgba(36, 83, 214, 0.12) 45%, transparent 68%);
+  box-shadow:
+    0 0 50px rgba(220, 169, 88, 0.3),
+    inset 0 0 70px rgba(64, 120, 255, 0.4);
+}
+
+.ringDash {
+  inset: 10%;
+  border: 2px dashed rgba(191, 230, 255, 0.4);
+  animation: spin 46s linear infinite;
+}
+
+.ringInner {
+  inset: 26%;
+  border: 1px solid rgba(191, 230, 255, 0.3);
+  background: radial-gradient(circle, rgba(236, 201, 130, 0.5), transparent 70%);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --------------------------------------------------------------------- deck */
+
+.deck {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: var(--deck-w);
+  aspect-ratio: 4 / 5;
+  transform: translate(-58%, -47%);
+  transform-style: preserve-3d;
+}
+
+.card {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.card[data-depth="0"] {
+  pointer-events: auto;
+}
+
+.card[data-accent="gold"] {
+  --cap: #ecc982;
+}
+.card[data-accent="ice"] {
+  --cap: #bfe6ff;
+}
+.card[data-accent="royal"] {
+  --cap: #a3bfff;
+}
+.card[data-accent="copper"] {
+  --cap: #f2ad6c;
+}
+
+.cardLink {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: 24px;
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-drag: none;
+}
+
+.cardLink:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  background: var(--bg-deep);
+  box-shadow:
+    0 2px 6px rgba(2, 6, 30, 0.45),
+    0 30px 60px -20px rgba(2, 6, 30, 0.85),
+    0 60px 120px -40px rgba(10, 30, 110, 0.7);
+}
+
+.img {
+  object-fit: cover;
+  /* No resting scale — the front card renders the image 1:1 so it stays crisp. */
+  transform: scale(1);
+  transition: transform 1.2s var(--ease);
+}
+
+.card[data-depth="0"] .cardLink:hover .img {
+  transform: scale(1.06);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to top, rgba(4, 9, 30, 0.96) 0%, rgba(4, 9, 30, 0.62) 32%, rgba(4, 9, 30, 0) 62%),
+    linear-gradient(to bottom, rgba(4, 9, 30, 0.35), transparent 22%);
+}
+
+/* dims the cards waiting behind the front one */
+.veil {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #060c26;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease);
+}
+
+.card[data-depth="1"] .veil {
+  opacity: 0.38;
+}
+
+.card[data-depth="2"] .veil,
+.card[data-depth="3"] .veil {
+  opacity: 0.62;
+}
+
+.glare {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.edge {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36);
+}
+
+.caption {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.5s var(--ease);
+}
+
+.card[data-depth="0"] .caption {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.18s;
+}
+
+.capCat {
+  align-self: flex-start;
+  padding: 5px 10px;
+  border-radius: 999px;
+  color: var(--cap, #ecc982);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: rgba(6, 12, 38, 0.82);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cap, #ecc982) 45%, transparent);
+}
+
+.capTitle {
+  color: #fff;
+  font-size: clamp(19px, 1.7vw, 24px);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  text-shadow: 0 2px 20px rgba(2, 8, 40, 0.6);
+}
+
+.capBlurb {
+  color: rgba(226, 232, 245, 0.78);
+  font-size: 13.5px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.capOpen {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 4px;
+  color: var(--cap, #ecc982);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.capOpen svg {
+  transition: transform 0.35s var(--ease);
+}
+
+.cardLink:hover .capOpen svg {
+  transform: translate(3px, -3px);
+}
+
+/* ------------------------------------------------------------ floating chips */
+
+.chip {
+  position: absolute;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px 11px 11px;
+  border-radius: 16px;
+  white-space: nowrap;
+  background: linear-gradient(135deg, rgba(30, 44, 96, 0.95), rgba(8, 14, 40, 0.97));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 24px 48px -20px rgba(2, 6, 30, 0.85);
+  pointer-events: none;
+}
+
+.chipSector {
+  left: -22%;
+  top: 13%;
+  transform: translateZ(120px);
+}
+
+.chipTrust {
+  right: -24%;
+  top: 28%;
+  transform: translateZ(180px);
+}
+
+.chipIcon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(145deg, #2a5be0, #0a2a88);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 8px 18px -8px rgba(36, 83, 214, 0.9);
+  overflow: hidden;
+}
+
+.chipIcon[data-accent="gold"],
+.chipIcon[data-accent="copper"] {
+  color: #1a1407;
+  background: linear-gradient(145deg, #f3d595, #c98f3a);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 8px 18px -8px rgba(220, 169, 88, 0.9);
+}
+
+.chipIconGlyph {
+  display: grid;
+  place-items: center;
+}
+
+.chipText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chipLabel {
+  color: rgba(203, 213, 232, 0.75);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.chipValue {
+  display: block;
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 650;
+  letter-spacing: -0.005em;
+}
+
+.chipCheck {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #0a1230;
+  background: linear-gradient(145deg, #f3d595, #c98f3a);
+  box-shadow: 0 0 0 5px rgba(220, 169, 88, 0.16);
+}
+
+/* ----------------------------------------------------------------- controls */
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.counter {
+  min-width: 56px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+.counterNow {
+  color: var(--text-strong);
+}
+
+.counterSep {
+  margin: 0 5px;
+  opacity: 0.5;
+}
+
+.nav {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  cursor: pointer;
+  transition:
+    background-color 0.3s var(--ease),
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.nav:hover {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(220, 169, 88, 0.6);
+  transform: scale(1.06);
+}
+
+.nav:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.seg {
+  position: relative;
+  width: 22px;
+  height: 4px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    width 0.45s var(--ease),
+    background-color 0.3s var(--ease);
+}
+
+/* larger hit area than the visible bar */
+.seg::before {
+  content: "";
+  position: absolute;
+  inset: -12px -3px;
+}
+
+.seg:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.seg[data-active] {
+  width: 54px;
+}
+
+.seg:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.segFill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--gold), #f3d595);
+  transform-origin: left center;
+}
+
+.segFill[data-run] {
+  animation-name: segRun;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.segFill[data-paused] {
+  animation-play-state: paused;
+}
+
+@keyframes segRun {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ----------------------------------------------------------- service ribbon */
+
+.ribbon {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: 18px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.ribbonTrack {
+  display: flex;
+  width: max-content;
+  animation: marquee 60s linear infinite;
+}
+
+.ribbon:hover .ribbonTrack {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ribbonList {
+  display: flex;
+  gap: 48px;
+  margin: 0;
+  padding: 0 48px 0 0;
+  list-style: none;
+}
+
+.ribbonItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(203, 213, 232, 0.62);
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.ribbonItem svg {
+  color: var(--gold);
+  opacity: 0.85;
+}
+
+/* ------------------------------------------------------------- responsive */
+
+@media (max-width: 1080px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 24px;
+  }
+
+  .copy {
+    max-width: 720px;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .sub {
+    margin-inline: auto;
+  }
+
+  .actions,
+  .stats {
+    justify-content: center;
+  }
+
+  .scene {
+    --deck-w: clamp(230px, min(38vw, 42vh), 330px);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding-top: clamp(100px, 13vh, 120px);
+  }
+
+  .inner {
+    width: calc(100% - 32px);
+  }
+
+  .badge {
+    gap: 8px;
+    padding: 6px 12px 6px 9px;
+    font-size: 10.5px;
+    letter-spacing: 0;
+  }
+
+  .badgeDot {
+    flex: none;
+  }
+
+  .title {
+    font-size: clamp(32px, 9vw, 38px);
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primary,
+  .secondary {
+    justify-content: center;
+  }
+
+  .primary {
+    padding-left: 20px;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stat,
+  .stat:first-child {
+    align-items: center;
+    padding: 0 6px;
+    text-align: center;
+  }
+
+  .statValue {
+    font-size: 22px;
+  }
+
+  .statLabel {
+    font-size: 11.5px;
+    line-height: 1.35;
+  }
+
+  .scene {
+    --deck-w: min(64vw, 270px);
+    height: calc(var(--deck-w) * 1.25 + 150px);
+  }
+
+  .caption {
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+  }
+
+  .capBlurb {
+    display: none;
+  }
+
+  .chip {
+    gap: 9px;
+    padding: 8px 12px 8px 8px;
+    border-radius: 13px;
+  }
+
+  .chipSector {
+    left: -7%;
+    top: 8%;
+  }
+
+  .chipTrust {
+    right: -10%;
+    top: 28%;
+  }
+
+  .chipIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+  }
+
+  .chipValue {
+    font-size: 12.5px;
+  }
+
+  .chipLabel {
+    font-size: 10px;
+  }
+
+  .chipCheck {
+    width: 26px;
+    height: 26px;
+  }
+
+  .nav {
+    width: 40px;
+    height: 40px;
+  }
+
+  .counter {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------- pause when off-screen */
+/* When the hero scrolls out of view it loses [data-inview]; freeze every
+   decorative animation so it stops burning the compositor in the background.
+   Autoplay is paused in JS via the same `inView` flag. */
+.hero:not([data-inview]) .aurora,
+.hero:not([data-inview]) .float,
+.hero:not([data-inview]) .ringDash,
+.hero:not([data-inview]) .badgeDot::after,
+.hero:not([data-inview]) .primary::after,
+.hero:not([data-inview]) .ribbonTrack {
+  animation-play-state: paused;
+}
+
+/* ---------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .copy > *,
+  .visual,
+  .aurora,
+  .floor,
+  .float,
+  .ringDash,
+  .badgeDot::after,
+  .primary::after,
+  .ribbonTrack {
+    animation: none;
+  }
+
+  .ribbonTrack {
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ribbonTrack > :last-child {
+    display: none;
+  }
+
+  .img,
+  .caption,
+  .veil,
+  .primary,
+  .secondary,
+  .nav,
+  .seg,
+  .primaryIcon svg,
+  .capOpen svg {
+    transition: none;
+  }
+
+  .primary:hover,
+  .secondary:hover,
+  .nav:hover,
+  .card[data-depth="0"] .cardLink:hover .img {
+    transform: none;
+  }
+}

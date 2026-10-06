@@ -1,0 +1,183 @@
+.wrap {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --gold: #dca958;
+  --gold-soft: #ecc982;
+  --ice: #bfe6ff;
+  position: relative;
+  width: min(100%, 440px);
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
+  isolation: isolate;
+}
+
+/* soft central glow */
+.glow {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(36, 83, 214, 0.4), transparent 68%);
+  filter: blur(34px);
+  z-index: 0;
+}
+
+/* concentric rings */
+.ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  translate: -50% -50%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ringOuter {
+  width: 100%;
+  height: 100%;
+  border: 1px dashed rgba(191, 230, 255, 0.22);
+  animation: spin 64s linear infinite;
+}
+
+.ringInner {
+  width: 64%;
+  height: 64%;
+  border: 1px solid rgba(220, 169, 88, 0.2);
+  box-shadow: inset 0 0 50px -16px rgba(220, 169, 88, 0.3);
+  animation: spinRev 48s linear infinite;
+}
+
+/* faint tick marks on an inner orbit */
+.ticks {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 82%;
+  height: 82%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  z-index: 1;
+  background:
+    repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.16) 0deg 0.5deg, transparent 0.5deg 15deg);
+  -webkit-mask: radial-gradient(circle, transparent 46%, #000 47%, #000 50%, transparent 51%);
+  mask: radial-gradient(circle, transparent 46%, #000 47%, #000 50%, transparent 51%);
+  opacity: 0.6;
+  animation: spin 90s linear infinite;
+}
+
+/* orbiting icon chips */
+.chip {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: clamp(48px, 13%, 62px);
+  height: clamp(48px, 13%, 62px);
+  translate: -50% -50%;
+  border-radius: 16px;
+  color: var(--gold-soft);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02)),
+    linear-gradient(165deg, rgba(22, 38, 84, 0.9), rgba(10, 17, 42, 0.92));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 16px 30px -14px rgba(2, 6, 30, 0.9);
+  animation: float 7s var(--ease) infinite;
+}
+
+.chip svg {
+  width: 46%;
+  height: 46%;
+}
+
+/* centre medallion */
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 4;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  width: clamp(118px, 34%, 150px);
+  aspect-ratio: 1 / 1;
+  align-content: center;
+  padding: 10px;
+  text-align: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.12), transparent 60%),
+    linear-gradient(165deg, rgba(24, 42, 92, 0.96), rgba(9, 15, 38, 0.98));
+  box-shadow:
+    inset 0 0 0 1px rgba(236, 201, 130, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.24),
+    0 30px 60px -24px rgba(2, 6, 30, 0.95),
+    0 0 50px -18px rgba(220, 169, 88, 0.5);
+}
+
+.centerIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--gold-soft);
+}
+
+.centerIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.centerLabel {
+  font-size: 13px;
+  font-weight: 680;
+  letter-spacing: 0.01em;
+  color: var(--text-strong);
+  line-height: 1.1;
+}
+
+.centerSub {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes spinRev {
+  to {
+    rotate: -360deg;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+@media (max-width: 980px) {
+  .wrap {
+    width: min(100%, 360px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ringOuter,
+  .ringInner,
+  .ticks,
+  .chip {
+    animation: none;
+  }
+}
