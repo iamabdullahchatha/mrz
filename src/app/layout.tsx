@@ -7,9 +7,32 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.mrzuae.com"),
   title: "MRZ Management Services FZE LLC | UAE Business, Trading, IT & Consultancy Services",
   description:
     "MRZ Management Services FZE LLC provides commercial brokerage, general trading, IT consultancy, cyber security architecture, accounting & bookkeeping, HR consultancy and UAE documents clearing services.",
+  openGraph: {
+    type: "website",
+    siteName: "MRZ Management Services",
+    title: "MRZ Management Services FZE LLC | UAE Business, Trading, IT & Consultancy Services",
+    description:
+      "MRZ Management Services FZE LLC provides commercial brokerage, general trading, IT consultancy, cyber security architecture, accounting & bookkeeping, HR consultancy and UAE documents clearing services.",
+    images: [
+      {
+        url: "/brand/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "MRZ Management Services — UAE business, trading, technology and consultancy solutions",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MRZ Management Services FZE LLC | UAE Business, Trading, IT & Consultancy Services",
+    description:
+      "MRZ Management Services FZE LLC provides commercial brokerage, general trading, IT consultancy, cyber security architecture, accounting & bookkeeping, HR consultancy and UAE documents clearing services.",
+    images: ["/brand/og-image.png"],
+  },
 };
 
 export const viewport: Viewport = {
