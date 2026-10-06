@@ -7,6 +7,7 @@ import { ProcessSection } from "@/components/sections/ProcessSection";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { ConsultationSection } from "@/components/sections/ConsultationSection";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
+import styles from "./Home.module.css";
 
 /**
  * DEMO ONLY — a stand-in home page so the header + hero can be judged over real
@@ -15,7 +16,7 @@ import { ScrollReveal } from "@/components/motion/ScrollReveal";
  */
 export default function HomePage() {
   return (
-    <>
+    <div className={styles.home}>
       <Hero />
 
       {/* Sections below the hero rise in with a smooth 3D reveal on scroll-down
@@ -43,6 +44,6 @@ export default function HomePage() {
       <ScrollReveal>
         <ConsultationSection />
       </ScrollReveal>
-    </>
+    </div>
   );
 }
