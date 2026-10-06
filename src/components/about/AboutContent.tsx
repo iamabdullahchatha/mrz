@@ -26,7 +26,7 @@ const STATS = [
 ];
 
 const STORY_POINTS = [
-  { icon: "building", text: "Based in Ajman Free Zone, serving businesses across the United Arab Emirates." },
+  { icon: "building", text: "Based at Amber Gem Tower on Sheikh Khalifa Street in Ajman, serving businesses across the United Arab Emirates." },
   { icon: "layers", text: `${services.length} specialist services coordinated under one roof — not ${services.length} separate vendors.` },
   { icon: "person", text: "One accountable contact, from the first plan through to day-to-day operations." },
 ];
@@ -198,7 +198,7 @@ export function AboutContent() {
               <p className={styles.heroLead}>
                 MRZ Management Services FZE LLC brings commercial brokerage, trading, IT &amp; cyber
                 security, engineering, accounting, HR and documents clearing together under one roof —
-                coordinated end to end from Ajman Free Zone, so you work with one accountable team
+                coordinated end to end from our Ajman office, so you work with one accountable team
                 instead of ten.
               </p>
               <div className={styles.heroActions}>
@@ -311,7 +311,7 @@ export function AboutContent() {
               </h2>
               <p className={styles.lead}>
                 MRZ was built on a simple idea: a business shouldn&apos;t need ten different vendors to
-                move forward. From our base in Ajman Free Zone, we bring commercial brokerage, trading,
+                move forward. From our Ajman office, we bring commercial brokerage, trading,
                 IT and cyber security, engineering, accounting, HR and documents clearing together under
                 one roof.
               </p>

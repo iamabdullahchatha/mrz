@@ -100,7 +100,7 @@ const WHY_MRZ: { icon: ReactNode; title: string; text: string }[] = [
   { icon: whyGlyph.team, title: "One accountable team", text: "Trade, technology, finance, people and compliance handled under a single team." },
   { icon: whyGlyph.doc, title: "Documentation-led", text: "Checklists and readiness reviews are built into every engagement from day one." },
   { icon: whyGlyph.contact, title: "A single point of contact", text: "No juggling providers — one relationship, coordinated from start to finish." },
-  { icon: whyGlyph.pin, title: "Ajman to all the UAE", text: "Based in Ajman Free Zone, supporting businesses right across the Emirates." },
+  { icon: whyGlyph.pin, title: "Ajman to all the UAE", text: "Based at Amber Gem Tower on Sheikh Khalifa Street, supporting businesses right across the Emirates." },
 ];
 
 const sectionReveal: Variants = {

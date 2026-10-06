@@ -129,7 +129,7 @@ export function Hero() {
         <div className={styles.copy}>
           <p className={styles.badge}>
             <span className={styles.badgeDot} />
-            From Ajman Free Zone support to multi-service delivery
+            From Ajman-based support to multi-service delivery
           </p>
 
           <h1 className={styles.title}>

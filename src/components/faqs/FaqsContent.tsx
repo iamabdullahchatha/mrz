@@ -106,7 +106,7 @@ const CATEGORIES = [
       },
       {
         q: "Where is MRZ based, and which areas do you serve?",
-        a: "We are based in Ajman Free Zone and coordinate support for businesses right across the United Arab Emirates.",
+        a: "Our office is at Amber Gem Tower, Mezzanine Floor, Sheikh Khalifa Street, Ajman, United Arab Emirates. We coordinate support for businesses across the country.",
       },
       {
         q: "Is MRZ really one team, or separate companies?",

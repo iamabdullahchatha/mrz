@@ -94,7 +94,7 @@ export function ConsultationSection() {
 
           <p className={styles.locale}>
             <span className={styles.localeDot} aria-hidden="true" />
-            Based in Ajman Free Zone · Serving businesses across the UAE
+            Amber Gem Tower, Ajman · Serving businesses across the UAE
           </p>
         </div>
       </div>

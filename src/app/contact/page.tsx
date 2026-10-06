@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { ContactContent } from "@/components/contact/ContactContent";
 
 export const metadata: Metadata = {
-  title: "Contact MRZ | Talk to One UAE Team in Ajman Free Zone",
+  title: "Contact MRZ | Amber Gem Tower, Ajman",
   description:
-    "Get in touch with MRZ Management Services FZE LLC. Call 06 808 8888, email info@mrzuae.com, or send a message — one accountable team for trade, technology, finance, HR, engineering and compliance across the UAE.",
+    "Visit MRZ Management Services FZE LLC at Amber Gem Tower, Mezzanine Floor, Sheikh Khalifa Street, Ajman, United Arab Emirates. Call 06 808 8888 or email info@mrzuae.com.",
 };
 
 export default function ContactPage() {

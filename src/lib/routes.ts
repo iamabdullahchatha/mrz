@@ -32,4 +32,11 @@ export const CONTACT = {
   phoneDisplay: "06 808 8888",
   phoneHref: "tel:+97168088888",
   email: "info@mrzuae.com",
+  address: {
+    building: "Amber Gem Tower",
+    floor: "Mezzanine Floor",
+    street: "Sheikh Khalifa Street",
+    city: "Ajman",
+    country: "United Arab Emirates",
+  },
 } as const;

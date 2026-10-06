@@ -114,7 +114,7 @@ export function Footer() {
           </div>
           <p className={styles.lead}>
             Trade, technology, engineering, finance, people and compliance —
-            coordinated from Ajman Free Zone for businesses across the Emirates.
+            coordinated from our Ajman office for businesses across the Emirates.
           </p>
         </motion.header>
 
@@ -165,7 +165,9 @@ export function Footer() {
                   <span className={styles.contactIcon}><PinIcon /></span>
                   <span className={styles.contactText}>
                     <span className={styles.contactLabel}>Visit</span>
-                    Ajman Free Zone, United Arab Emirates
+                    {CONTACT.address.building}, {CONTACT.address.floor}
+                    <span>{CONTACT.address.street}</span>
+                    <span>{CONTACT.address.city}, {CONTACT.address.country}</span>
                   </span>
                 </li>
               </ul>
@@ -231,7 +233,7 @@ export function Footer() {
           <div className={styles.bottomRight}>
             <span className={styles.locale}>
               <span className={styles.localeDot} aria-hidden="true" />
-              Ajman Free Zone · United Arab Emirates
+              Amber Gem Tower · Ajman, UAE
             </span>
             <button type="button" className={styles.toTop} onClick={toTop}>
               Back to top

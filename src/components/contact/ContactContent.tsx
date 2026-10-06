@@ -207,7 +207,7 @@ export function ContactContent() {
               </h1>
               <p className={styles.lead}>
                 Tell us what you&apos;re planning — trade, technology, finance, people or compliance — and we&apos;ll
-                point it to the right part of the team. Based in Ajman Free Zone, working with businesses across the UAE.
+                point it to the right part of the team. Our office is on Sheikh Khalifa Street in Ajman, and we work with businesses across the UAE.
               </p>
 
               <div className={styles.heroChips}>
@@ -307,8 +307,10 @@ export function ContactContent() {
                     <span className={styles.methodIcon} aria-hidden="true"><Pin /></span>
                     <div className={styles.methodBody}>
                       <span className={styles.methodLabel}>Visit us</span>
-                      <p className={styles.methodValue}>Ajman Free Zone</p>
-                      <p className={styles.methodSub}>Ajman, United Arab Emirates · serving businesses nationwide</p>
+                      <p className={styles.methodValue}>{CONTACT.address.building}, {CONTACT.address.floor}</p>
+                      <p className={styles.methodSub}>
+                        {CONTACT.address.street}, {CONTACT.address.city}, {CONTACT.address.country}
+                      </p>
                     </div>
                   </TiltCard>
                 </motion.div>
@@ -546,7 +548,7 @@ export function ContactContent() {
             </div>
             <p className={styles.locale}>
               <span className={styles.localeDot} aria-hidden="true" />
-              Based in Ajman Free Zone · Serving businesses across the UAE
+              Amber Gem Tower, Ajman · Serving businesses across the UAE
             </p>
           </motion.div>
         </div>
