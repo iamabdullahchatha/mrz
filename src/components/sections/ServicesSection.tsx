@@ -89,9 +89,7 @@ export function ServicesSection() {
                     <MenuIcon name={s.icon} width={22} height={22} />
                   </span>
                   <h3 className={styles.cardTitle}>
-                    <Link href={s.href} className={styles.cardLink}>
-                      {s.title}
-                    </Link>
+                    {s.title}
                   </h3>
                   <p className={styles.blurb}>{s.blurb ?? s.description}</p>
                   <span className={styles.more}>
@@ -101,6 +99,7 @@ export function ServicesSection() {
                     </span>
                   </span>
                 </div>
+                <Link href={s.href} className={styles.cardLink} aria-label={`View ${s.title} service`} />
               </TiltCard>
             </li>
           ))}

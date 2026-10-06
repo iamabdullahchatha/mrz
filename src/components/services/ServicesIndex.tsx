@@ -171,9 +171,7 @@ export function ServicesIndex() {
                     <MenuIcon name={s.icon} width={22} height={22} />
                   </span>
                   <h2 className={styles.cardTitle}>
-                    <Link href={s.href} className={styles.cardLink}>
-                      {s.title}
-                    </Link>
+                    {s.title}
                   </h2>
                   <p className={styles.blurb}>{s.blurb ?? s.description}</p>
                   <span className={styles.more}>
@@ -183,6 +181,7 @@ export function ServicesIndex() {
                     </span>
                   </span>
                 </div>
+                <Link href={s.href} className={styles.cardLink} aria-label={`View ${s.title} service`} />
               </TiltCard>
             </motion.li>
           ))}
