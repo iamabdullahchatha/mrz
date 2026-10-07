@@ -1,17 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
-import { ArrowRight } from "@/components/header/icons";
+import kit from "@/components/common/PageKit.module.css";
+import { Arrow, Phone } from "@/components/common/kitIcons";
+import { useSpotlight } from "@/components/common/useSpotlight";
 import { MenuIcon } from "@/components/header/menuIcons";
-import { services } from "@/data/services";
+import { pad2 } from "@/components/header/motion";
+import { TiltCard } from "@/components/sections/TiltCard";
 import { industries } from "@/data/industries";
+import { accentStyle } from "@/data/serviceContent";
+import { services } from "@/data/services";
 import type { MenuEntry } from "@/data/types";
 import { CONTACT, ROUTES } from "@/lib/routes";
-import { TiltCard } from "@/components/sections/TiltCard";
-import { HeroOrbit } from "@/components/common/HeroOrbit";
 import styles from "./About.module.css";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -19,10 +22,10 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const DISCIPLINES = new Set(services.map((s) => s.category)).size;
 
 const STATS = [
-  { to: services.length, suffix: "", label: "Specialist services" },
-  { to: DISCIPLINES, suffix: "", label: "Core disciplines" },
-  { to: industries.length, suffix: "", label: "Industries served" },
-  { to: 1, suffix: "", label: "Accountable team, end to end" },
+  { to: services.length, label: "Specialist services" },
+  { to: DISCIPLINES, label: "Core disciplines" },
+  { to: industries.length, label: "Industries served" },
+  { to: 1, label: "Accountable team, end to end" },
 ];
 
 const STORY_POINTS = [
@@ -57,6 +60,7 @@ const DISCIPLINE_LIST = (() => {
       category,
       icon: CATEGORY_META[category]?.icon ?? items[0].icon,
       tagline: CATEGORY_META[category]?.tagline ?? items[0].blurb,
+      accent: items[0].accent,
       items,
     };
   });
@@ -84,304 +88,385 @@ const PROCESS = [
 const VALUES = [
   {
     icon: "layers",
+    accent: "gold",
     title: "Everything under one roof",
     text: "Trade, technology, engineering, people and compliance — coordinated by a single team instead of a dozen disconnected vendors.",
   },
   {
     icon: "person",
+    accent: "ice",
     title: "One accountable contact",
     text: "You work with one point of contact who keeps every workstream moving together, from first plan to day-to-day operations.",
   },
   {
     icon: "shield",
+    accent: "royal",
     title: "Documentation-led, always",
     text: "A clear, compliant plan is agreed and documented before any work begins — so there are no surprises, only progress.",
   },
   {
     icon: "building",
+    accent: "copper",
     title: "Rooted in Ajman, serving the UAE",
     text: "On-the-ground support from Ajman Free Zone setup to everyday operations for businesses right across the Emirates.",
   },
-];
+] as const;
 
 /* --------------------------------------------------------------- variants */
 
-const headVariants: Variants = {
-  hidden: { opacity: 0, y: 28, rotateX: 10, transformPerspective: 1100 },
-  shown: { opacity: 1, y: 0, rotateX: 0, transformPerspective: 1100, transition: { duration: 0.6, ease: EASE } },
-};
-
-const featureVariants: Variants = {
-  hidden: { opacity: 0, y: 46, rotateX: 12, transformPerspective: 1300 },
-  shown: { opacity: 1, y: 0, rotateX: 0, transformPerspective: 1300, transition: { duration: 0.75, ease: EASE } },
-};
-
-const containerVariants: Variants = {
+const heroVariants: Variants = {
   hidden: {},
-  shown: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+  shown: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+};
+
+const riseVariants: Variants = {
+  hidden: { opacity: 0, y: 26 },
+  shown: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+};
+
+const listVariants: Variants = {
+  hidden: {},
+  shown: { transition: { staggerChildren: 0.08, delayChildren: 0.04 } },
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 38, rotateX: 16, transformPerspective: 1000 },
-  shown: { opacity: 1, y: 0, rotateX: 0, transformPerspective: 1000, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 34, scale: 0.97 },
+  shown: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: EASE } },
 };
 
 /* ---------------------------------------------------------- count-up stat */
 
-function Stat({ to, suffix, label, reduce }: { to: number; suffix: string; label: string; reduce: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
+function CountUp({ to, reduce }: { to: number; reduce: boolean }) {
+  const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
   const [val, setVal] = useState(reduce ? to : 0);
 
   useEffect(() => {
-    if (reduce) { setVal(to); return; }
+    if (reduce) {
+      setVal(to);
+      return;
+    }
     if (!inView) return;
     let raf = 0;
     const dur = 1150;
     const start = performance.now();
     const tick = (t: number) => {
       const p = Math.min(1, (t - start) / dur);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setVal(Math.round(eased * to));
+      setVal(Math.round((1 - Math.pow(1 - p, 3)) * to));
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [inView, reduce, to]);
 
+  return <span ref={ref}>{val}</span>;
+}
+
+/** Section head shared by the centred sections below. */
+function SectionHead({
+  id,
+  kicker,
+  lead,
+  children,
+  reduce,
+}: {
+  id: string;
+  kicker: string;
+  lead: string;
+  children: ReactNode;
+  reduce: boolean;
+}) {
   return (
-    <motion.div ref={ref} className={styles.stat} variants={reduce ? undefined : cardVariants}>
-      <span className={styles.statNum}>
-        {val}
-        {suffix}
-      </span>
-      <span className={styles.statLabel}>{label}</span>
-    </motion.div>
+    <motion.header
+      className={kit.sectionHead}
+      initial={reduce ? false : "hidden"}
+      whileInView="shown"
+      viewport={{ once: true, amount: 0.6 }}
+      variants={reduce ? undefined : riseVariants}
+    >
+      <p className={kit.kicker}>
+        <span className={kit.kickerDot} aria-hidden="true" />
+        {kicker}
+      </p>
+      <h2 id={id} className={kit.sectionTitle}>
+        {children}
+      </h2>
+      <p className={kit.sectionLead}>{lead}</p>
+    </motion.header>
   );
 }
 
 /**
- * About MRZ — a full page in the site's visual language. Multiple 3D animations:
- * a pointer-tilt story image with translateZ parallax, a count-up stats band,
- * and staggered 3D-reveal grids for disciplines, values, the engagement process
- * and the industries served. Every figure, link, discipline and industry is
- * derived from the vetted services/industries data and routes.ts — nothing is
- * invented. All glass is baked (no scroll-time backdrop-filter) for smooth scroll.
+ * About MRZ, in the same visual language as the Services and Industries index
+ * pages. A split hero pairs the headline and count-up stats with a layered
+ * photo collage; then the story, the six disciplines (cursor-spotlit glass
+ * cards linking every service), the values, a self-drawing engagement rail,
+ * the industries served and a closing CTA. Every figure, link, discipline and
+ * industry is derived from the vetted data and routes.ts — nothing is invented.
  */
 export function AboutContent() {
   const reduce = useReducedMotion() ?? false;
+  const disc = useSpotlight<HTMLUListElement>();
+  const vals = useSpotlight<HTMLUListElement>();
+  const inds = useSpotlight<HTMLUListElement>();
+  const stepsRef = useRef<HTMLDivElement>(null);
+  const stepsInView = useInView(stepsRef, { once: true, amount: 0.3 });
+
+  const gridMotion = {
+    initial: reduce ? false : ("hidden" as const),
+    whileInView: "shown",
+    viewport: { once: true, amount: 0.12 },
+    variants: reduce ? undefined : listVariants,
+  };
 
   return (
-    <>
-      {/* ============================================================ hero */}
-      <section className={styles.hero} aria-labelledby="about-hero-title">
-        <span className={styles.blobRoyal} aria-hidden="true" />
-        <span className={styles.blobGold} aria-hidden="true" />
+    <div className={kit.page}>
+      {/* ---------------------------------------------------------- hero */}
+      <section className={kit.hero} aria-labelledby="about-title">
+        <span className={kit.gridBg} aria-hidden="true" />
+        <span className={kit.aurora} aria-hidden="true" />
+        <span className={kit.blobRoyal} aria-hidden="true" />
+        <span className={kit.blobGold} aria-hidden="true" />
 
-        <div className={styles.inner}>
-          <div className={styles.heroGrid}>
-            <motion.div
-              className={styles.heroHead}
-              initial={reduce ? false : "hidden"}
-              whileInView="shown"
-              viewport={{ once: true, amount: 0.5 }}
-              variants={reduce ? undefined : headVariants}
-            >
-              <p className={styles.kicker}>
-                <span className={styles.kickerDot} aria-hidden="true" />
-                About MRZ
-              </p>
-              <h1 id="about-hero-title" className={styles.heroTitle}>
-                One UAE team behind <span className={styles.titleAccent}>every part of your business</span>
-              </h1>
-              <p className={styles.heroLead}>
-                MRZ Management Services FZE LLC brings commercial brokerage, trading, IT &amp; cyber
-                security, engineering, HR and documents clearing together under one roof —
-                coordinated end to end from our Ajman office, so you work with one accountable team
-                instead of nine.
-              </p>
-              <div className={styles.heroActions}>
-                <Link href={ROUTES.contact} className={styles.primary}>
-                  Get in touch
-                  <span className={styles.primaryIcon} aria-hidden="true"><ArrowRight /></span>
-                </Link>
-                <Link href={ROUTES.services} className={styles.secondary}>
-                  Explore our services
-                </Link>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className={styles.heroVisual}
-              initial={reduce ? false : { opacity: 0, scale: 0.92 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.85, ease: EASE }}
-            >
-              <HeroOrbit
-                center={<MenuIcon name="layers" />}
-                centerLabel="One team"
-                centerSub="MRZ"
-                items={[
-                  { key: "trade", icon: <MenuIcon name="exchange" /> },
-                  { key: "tech", icon: <MenuIcon name="chip" /> },
-                  { key: "compliance", icon: <MenuIcon name="doc" /> },
-                  { key: "corporate", icon: <MenuIcon name="office" /> },
-                  { key: "engineering", icon: <MenuIcon name="flame" /> },
-                  { key: "people", icon: <MenuIcon name="people" /> },
-                ]}
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ====================================== animation 1: count-up stats */}
-      <section className={styles.statsSection} aria-label="MRZ at a glance">
-        <div className={styles.inner}>
+        <div className={kit.heroInner}>
           <motion.div
-            className={styles.statsGrid}
+            className={kit.heroCopy}
             initial={reduce ? false : "hidden"}
-            whileInView="shown"
-            viewport={{ once: true, amount: 0.4 }}
-            variants={reduce ? undefined : containerVariants}
+            animate="shown"
+            variants={reduce ? undefined : heroVariants}
           >
-            {STATS.map((s) => (
-              <Stat key={s.label} to={s.to} suffix={s.suffix} label={s.label} reduce={reduce} />
-            ))}
+            <motion.nav className={kit.crumbs} aria-label="Breadcrumb" variants={reduce ? undefined : riseVariants}>
+              <Link href={ROUTES.home}>Home</Link>
+              <span aria-hidden="true">/</span>
+              <span className={kit.crumbCurrent} aria-current="page">
+                About
+              </span>
+            </motion.nav>
+
+            <motion.p className={kit.kicker} variants={reduce ? undefined : riseVariants}>
+              <span className={kit.kickerDot} aria-hidden="true" />
+              About MRZ
+            </motion.p>
+
+            <motion.h1 id="about-title" className={kit.title} variants={reduce ? undefined : riseVariants}>
+              One UAE team behind <span className={kit.titleAccent}>every part of your business</span>
+            </motion.h1>
+
+            <motion.p className={kit.lead} variants={reduce ? undefined : riseVariants}>
+              MRZ Management Services FZE LLC brings commercial brokerage, trading, IT &amp; cyber security,
+              engineering, HR and documents clearing together under one roof — coordinated end to end from our Ajman
+              office, so you work with one accountable team instead of nine.
+            </motion.p>
+
+            <motion.div className={kit.heroActions} variants={reduce ? undefined : riseVariants}>
+              <Link href={ROUTES.contact} className={kit.primary}>
+                Get in touch
+                <span className={kit.primaryIcon} aria-hidden="true">
+                  <Arrow />
+                </span>
+              </Link>
+              <Link href={ROUTES.services} className={kit.secondary}>
+                Explore our services
+              </Link>
+            </motion.div>
+
+            <motion.dl className={kit.stats} variants={reduce ? undefined : riseVariants}>
+              {STATS.map((s) => (
+                <div key={s.label} className={kit.stat}>
+                  <dt className={kit.statLabel}>{s.label}</dt>
+                  <dd className={kit.statValue}>
+                    <CountUp to={s.to} reduce={reduce} />
+                  </dd>
+                </div>
+              ))}
+            </motion.dl>
+          </motion.div>
+
+          {/* decorative photo collage — the story section carries the real content */}
+          <motion.div
+            className={styles.collage}
+            aria-hidden="true"
+            initial={reduce ? false : { opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.1, ease: EASE, delay: 0.15 }}
+          >
+            <span className={styles.ring} />
+            <span className={styles.ringInner} />
+
+            <div className={`${styles.shot} ${styles.shotMain}`}>
+              <Image
+                src="/images/about/team.webp"
+                alt=""
+                fill
+                preload
+                className={styles.shotImg}
+                sizes="(max-width: 1024px) 86vw, 520px"
+                quality={85}
+              />
+              <span className={styles.shotShade} />
+              <span className={kit.liveBorder} />
+            </div>
+
+            <div className={`${styles.shot} ${styles.shotSide}`}>
+              <Image
+                src="/images/hero/uae-dubai-night.webp"
+                alt=""
+                fill
+                className={styles.shotImg}
+                sizes="(max-width: 1024px) 46vw, 270px"
+              />
+              <span className={styles.shotShade} />
+              <span className={styles.shotCaption}>
+                <span className={styles.shotDot} />
+                Across the UAE
+              </span>
+            </div>
+
+            <div className={`${kit.chip} ${styles.chipA}`}>
+              <span className={kit.chipIcon}>
+                <MenuIcon name="building" width={20} height={20} />
+              </span>
+              <span className={kit.chipText}>
+                <span className={kit.chipLabel}>Based in</span>
+                <span className={kit.chipValue}>Ajman · UAE</span>
+              </span>
+            </div>
+            <div className={`${kit.chip} ${styles.chipB}`}>
+              <span className={kit.chipStat}>{DISCIPLINES}</span>
+              <span className={kit.chipStatLabel}>
+                disciplines,
+                <br />
+                one team
+              </span>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ============================ animation 2: 3D story image + narrative */}
-      <section className={styles.story} aria-labelledby="about-story-title">
-        <span className={styles.blobRoyalB} aria-hidden="true" />
-        <span className={styles.blobGold} aria-hidden="true" />
-
-        <div className={styles.inner}>
-          <div className={styles.storyGrid}>
-            <motion.div
-              className={styles.storyMedia}
-              initial={reduce ? false : "hidden"}
-              whileInView="shown"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={reduce ? undefined : featureVariants}
-            >
-              <TiltCard className={styles.storyCard} max={7} lift={6} glare>
-                <span className={styles.media}>
-                  <Image
-                    src="/images/about/collaboration.webp"
-                    alt="The MRZ team collaborating around a laptop in a bright, modern UAE office"
-                    fill
-                    sizes="(max-width: 980px) 92vw, 560px"
-                    quality={85}
-                    priority
-                    className={styles.img}
-                  />
-                  <span className={styles.mediaShade} aria-hidden="true" />
+      {/* --------------------------------------------------------- story */}
+      <section className={kit.section} aria-labelledby="about-story-title">
+        <div className={`${kit.inner} ${styles.storyGrid}`}>
+          <motion.div
+            className={styles.storyMedia}
+            initial={reduce ? false : { opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: EASE }}
+          >
+            <TiltCard className={styles.storyCard} max={6} lift={6}>
+              <span className={styles.storyFrame}>
+                <Image
+                  src="/images/about/collaboration.webp"
+                  alt="The MRZ team collaborating around a laptop in a bright, modern UAE office"
+                  fill
+                  sizes="(max-width: 960px) 92vw, 580px"
+                  quality={85}
+                  className={styles.storyImg}
+                />
+                <span className={styles.storyShade} aria-hidden="true" />
+              </span>
+              <span className={kit.liveBorder} aria-hidden="true" />
+              <span className={styles.storyTag} aria-hidden="true">
+                <span className={styles.shotDot} />
+                {CONTACT.address.building} · {CONTACT.address.city}
+              </span>
+              <span className={styles.storyChip} aria-hidden="true">
+                <span className={kit.chipStat}>{services.length}</span>
+                <span className={kit.chipStatLabel}>
+                  specialist services,
+                  <br />
+                  one accountable team
                 </span>
-                <span className={styles.frame} aria-hidden="true" />
+              </span>
+            </TiltCard>
+          </motion.div>
 
-                <span className={styles.tag} aria-hidden="true">Ajman · UAE</span>
-                <span className={styles.featureChip} aria-hidden="true">
-                  <span className={styles.featureChipNum}>{services.length}</span>
-                  <span className={styles.featureChipText}>
-                    specialist services
-                    <br />
-                    one accountable team
+          <motion.div
+            className={styles.storyText}
+            initial={reduce ? false : "hidden"}
+            whileInView="shown"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={reduce ? undefined : listVariants}
+          >
+            <motion.p className={kit.kicker} variants={reduce ? undefined : riseVariants}>
+              <span className={kit.kickerDot} aria-hidden="true" />
+              Who we are
+            </motion.p>
+            <motion.h2 id="about-story-title" className={kit.sectionTitle} variants={reduce ? undefined : riseVariants}>
+              A single team for the <span className={kit.titleAccent}>whole of your business</span>
+            </motion.h2>
+            <motion.p className={styles.storyLead} variants={reduce ? undefined : riseVariants}>
+              MRZ was built on a simple idea: a business shouldn&apos;t need nine different vendors to move forward.
+              From our Ajman office, we bring commercial brokerage, trading, IT and cyber security, engineering, HR
+              and documents clearing together under one roof.
+            </motion.p>
+            <motion.p className={styles.storyLead} variants={reduce ? undefined : riseVariants}>
+              The result is one accountable team that plans, coordinates and delivers every workstream together — so
+              nothing falls between the gaps, and you always know who&apos;s answerable for the outcome.
+            </motion.p>
+
+            <ul className={styles.points}>
+              {STORY_POINTS.map((p) => (
+                <motion.li key={p.text} className={styles.point} variants={reduce ? undefined : riseVariants}>
+                  <span className={styles.pointIcon} aria-hidden="true">
+                    <MenuIcon name={p.icon} width={18} height={18} />
                   </span>
-                </span>
-              </TiltCard>
-            </motion.div>
-
-            <motion.div
-              className={styles.storyText}
-              initial={reduce ? false : "hidden"}
-              whileInView="shown"
-              viewport={{ once: true, amount: 0.4 }}
-              variants={reduce ? undefined : headVariants}
-            >
-              <p className={styles.kicker}>
-                <span className={styles.kickerDot} aria-hidden="true" />
-                Who we are
-              </p>
-              <h2 id="about-story-title" className={styles.title}>
-                A single team for the <span className={styles.titleAccent}>whole of your business</span>
-              </h2>
-              <p className={styles.lead}>
-                MRZ was built on a simple idea: a business shouldn&apos;t need nine different vendors to
-                move forward. From our Ajman office, we bring commercial brokerage, trading,
-                IT and cyber security, engineering, HR and documents clearing together under
-                one roof.
-              </p>
-              <p className={styles.lead}>
-                The result is one accountable team that plans, coordinates and delivers every workstream
-                together — so nothing falls between the gaps, and you always know who&apos;s answerable
-                for the outcome.
-              </p>
-
-              <ul className={styles.storyPoints}>
-                {STORY_POINTS.map((p) => (
-                  <li key={p.text} className={styles.storyPoint}>
-                    <span className={styles.storyPointIcon} aria-hidden="true">
-                      <MenuIcon name={p.icon} width={18} height={18} />
-                    </span>
-                    {p.text}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
+                  {p.text}
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
         </div>
       </section>
 
-      {/* ======================= animation 3: staggered 3D disciplines grid */}
-      <section className={styles.disciplines} aria-labelledby="about-disc-title">
-        <span className={styles.blobGoldB} aria-hidden="true" />
-        <span className={styles.blobRoyal} aria-hidden="true" />
-
-        <div className={styles.inner}>
-          <motion.header
-            className={styles.secHead}
-            initial={reduce ? false : "hidden"}
-            whileInView="shown"
-            viewport={{ once: true, amount: 0.6 }}
-            variants={reduce ? undefined : headVariants}
+      {/* --------------------------------------------------- disciplines */}
+      <section className={`${kit.section} ${kit.band}`} aria-labelledby="about-disc-title">
+        <span className={kit.bandGlow} aria-hidden="true" />
+        <div className={kit.inner}>
+          <SectionHead
+            id="about-disc-title"
+            kicker="What we do"
+            lead="One team, one point of contact — covering every discipline most UAE businesses need to set up, operate and grow."
+            reduce={reduce}
           >
-            <p className={styles.kicker}>
-              <span className={styles.kickerDot} aria-hidden="true" />
-              What we do
-            </p>
-            <h2 id="about-disc-title" className={styles.title}>
-              {services.length} specialist services across{" "}
-              <span className={styles.titleAccent}>{DISCIPLINES} core disciplines</span>
-            </h2>
-            <p className={styles.lead}>
-              One team, one point of contact — covering every discipline most UAE businesses need to
-              set up, operate and grow.
-            </p>
-          </motion.header>
+            {services.length} specialist services across{" "}
+            <span className={kit.titleAccent}>{DISCIPLINES} core disciplines</span>
+          </SectionHead>
 
           <motion.ul
-            className={styles.discGrid}
-            initial={reduce ? false : "hidden"}
-            whileInView="shown"
-            viewport={{ once: true, amount: 0.15 }}
-            variants={reduce ? undefined : containerVariants}
+            ref={disc.ref}
+            className={`${styles.discGrid} ${kit.spotHost}`}
+            onPointerMove={disc.onPointerMove}
+            {...gridMotion}
           >
-            {DISCIPLINE_LIST.map((d) => (
-              <motion.li key={d.category} className={styles.discCell} variants={reduce ? undefined : cardVariants}>
-                <TiltCard className={styles.discCard} max={8} lift={5} glare>
-                  <span className={styles.discIcon} aria-hidden="true">
+            {DISCIPLINE_LIST.map((d, i) => (
+              <motion.li
+                key={d.category}
+                data-spot=""
+                className={kit.cell}
+                style={accentStyle(d.accent)}
+                variants={reduce ? undefined : cardVariants}
+              >
+                <TiltCard className={`${kit.glass} ${styles.discCard}`} max={6} lift={6}>
+                  <span className={kit.spotFill} aria-hidden="true" />
+                  <span className={kit.spot} aria-hidden="true" />
+                  <span className={kit.glow} aria-hidden="true" />
+                  <span className={kit.travel} aria-hidden="true" />
+                  <span className={kit.numeral} aria-hidden="true">
+                    {pad2(i + 1)}
+                  </span>
+
+                  <span className={kit.iconTile} aria-hidden="true">
                     <MenuIcon name={d.icon} width={22} height={22} />
                   </span>
-                  <h3 className={styles.discTitle}>{d.category}</h3>
-                  <p className={styles.discText}>{d.tagline}</p>
+                  <h3 className={kit.cardTitle}>{d.category}</h3>
+                  <p className={kit.cardText}>{d.tagline}</p>
                   <ul className={styles.discLinks}>
                     {d.items.map((s) => (
                       <li key={s.id}>
                         <Link href={s.href} className={styles.discLink}>
-                          {s.title}
+                          <span>{s.title}</span>
+                          <Arrow size={16} />
                         </Link>
                       </li>
                     ))}
@@ -393,47 +478,74 @@ export function AboutContent() {
         </div>
       </section>
 
-      {/* ============================ animation 4: staggered 3D values grid */}
-      <section className={styles.values} aria-labelledby="about-values-title">
-        <span className={styles.blobRoyalB} aria-hidden="true" />
-        <span className={styles.blobGoldB} aria-hidden="true" />
-
-        <div className={styles.inner}>
-          <motion.header
-            className={styles.valuesHead}
+      {/* -------------------------------------------------------- values */}
+      <section className={kit.section} aria-labelledby="about-values-title">
+        <div className={`${kit.inner} ${styles.valuesLayout}`}>
+          <motion.div
+            className={styles.valuesIntro}
             initial={reduce ? false : "hidden"}
             whileInView="shown"
-            viewport={{ once: true, amount: 0.6 }}
-            variants={reduce ? undefined : headVariants}
+            viewport={{ once: true, amount: 0.3 }}
+            variants={reduce ? undefined : listVariants}
           >
-            <p className={styles.kicker}>
-              <span className={styles.kickerDot} aria-hidden="true" />
+            <motion.p className={kit.kicker} variants={reduce ? undefined : riseVariants}>
+              <span className={kit.kickerDot} aria-hidden="true" />
               How we work
-            </p>
-            <h2 id="about-values-title" className={styles.title}>
-              A single team you can <span className={styles.titleAccent}>hold accountable</span>
-            </h2>
-            <p className={styles.lead}>
-              The way we&apos;re set up is the difference: one coordinated team, a documented plan
-              before any work, and a single person answerable for the result.
-            </p>
-          </motion.header>
+            </motion.p>
+            <motion.h2 id="about-values-title" className={kit.sectionTitle} variants={reduce ? undefined : riseVariants}>
+              A single team you can <span className={kit.titleAccent}>hold accountable</span>
+            </motion.h2>
+            <motion.p className={styles.storyLead} variants={reduce ? undefined : riseVariants}>
+              The way we&apos;re set up is the difference: one coordinated team, a documented plan before any work,
+              and a single person answerable for the result.
+            </motion.p>
+
+            <motion.div className={styles.valuesPhoto} variants={reduce ? undefined : riseVariants}>
+              <Image
+                src="/images/hero/management-meeting.webp"
+                alt="A business team meeting around a table in a modern office"
+                fill
+                className={styles.valuesImg}
+                sizes="(max-width: 960px) 92vw, 480px"
+              />
+              <span className={styles.valuesShade} aria-hidden="true" />
+              <span className={styles.valuesCaption}>
+                <span className={styles.valuesCaptionIcon} aria-hidden="true">
+                  <MenuIcon name="shield" width={18} height={18} />
+                </span>
+                One plan · one team · one contact
+              </span>
+            </motion.div>
+          </motion.div>
 
           <motion.ul
-            className={styles.valuesGrid}
-            initial={reduce ? false : "hidden"}
-            whileInView="shown"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={reduce ? undefined : containerVariants}
+            ref={vals.ref}
+            className={`${styles.valuesGrid} ${kit.spotHost}`}
+            onPointerMove={vals.onPointerMove}
+            {...gridMotion}
           >
-            {VALUES.map((v) => (
-              <motion.li key={v.title} className={styles.valueCell} variants={reduce ? undefined : cardVariants}>
-                <TiltCard className={styles.valueCard} max={9} lift={6} glare>
-                  <span className={styles.valueIcon} aria-hidden="true">
+            {VALUES.map((v, i) => (
+              <motion.li
+                key={v.title}
+                data-spot=""
+                className={kit.cell}
+                style={accentStyle(v.accent)}
+                variants={reduce ? undefined : cardVariants}
+              >
+                <TiltCard className={`${kit.glass} ${styles.valueCard}`} max={7} lift={6}>
+                  <span className={kit.spotFill} aria-hidden="true" />
+                  <span className={kit.spot} aria-hidden="true" />
+                  <span className={kit.glow} aria-hidden="true" />
+                  <span className={kit.travel} aria-hidden="true" />
+                  <span className={kit.numeral} aria-hidden="true">
+                    {pad2(i + 1)}
+                  </span>
+
+                  <span className={kit.iconTile} aria-hidden="true">
                     <MenuIcon name={v.icon} width={22} height={22} />
                   </span>
-                  <h3 className={styles.valueTitle}>{v.title}</h3>
-                  <p className={styles.valueText}>{v.text}</p>
+                  <h3 className={kit.cardTitle}>{v.title}</h3>
+                  <p className={kit.cardText}>{v.text}</p>
                 </TiltCard>
               </motion.li>
             ))}
@@ -441,102 +553,105 @@ export function AboutContent() {
         </div>
       </section>
 
-      {/* =========================== animation 5: staggered 3D process steps */}
-      <section className={styles.process} aria-labelledby="about-process-title">
-        <span className={styles.blobRoyal} aria-hidden="true" />
-
-        <div className={styles.inner}>
-          <motion.header
-            className={styles.secHead}
-            initial={reduce ? false : "hidden"}
-            whileInView="shown"
-            viewport={{ once: true, amount: 0.6 }}
-            variants={reduce ? undefined : headVariants}
+      {/* ------------------------------------------------------- process */}
+      <section className={`${kit.section} ${kit.band}`} aria-labelledby="about-process-title">
+        <span className={kit.bandGlow} aria-hidden="true" />
+        <div className={kit.inner}>
+          <SectionHead
+            id="about-process-title"
+            kicker="How we engage"
+            lead="A straightforward path, the same every time — so you always know what happens next."
+            reduce={reduce}
           >
-            <p className={styles.kicker}>
-              <span className={styles.kickerDot} aria-hidden="true" />
-              How we engage
-            </p>
-            <h2 id="about-process-title" className={styles.title}>
-              From first conversation to <span className={styles.titleAccent}>day-to-day delivery</span>
-            </h2>
-            <p className={styles.lead}>
-              A straightforward path, the same every time — so you always know what happens next.
-            </p>
-          </motion.header>
+            From first conversation to <span className={kit.titleAccent}>day-to-day delivery</span>
+          </SectionHead>
 
-          <motion.ol
-            className={styles.procSteps}
-            initial={reduce ? false : "hidden"}
-            whileInView="shown"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={reduce ? undefined : containerVariants}
-          >
-            {PROCESS.map((step, i) => (
-              <motion.li key={step.title} className={styles.procCell} variants={reduce ? undefined : cardVariants}>
-                <TiltCard className={styles.procCard} max={7} lift={5} glare>
-                  <span className={styles.procNum} aria-hidden="true">
-                    {String(i + 1).padStart(2, "0")}
+          <div ref={stepsRef} className={kit.stepsWrap} data-shown={stepsInView || reduce || undefined}>
+            <span className={kit.stepsRail} aria-hidden="true">
+              <span className={kit.stepsRailFill} />
+            </span>
+            <motion.ol
+              className={kit.steps}
+              initial={reduce ? false : "hidden"}
+              animate={stepsInView ? "shown" : "hidden"}
+              variants={reduce ? undefined : listVariants}
+            >
+              {PROCESS.map((step, i) => (
+                <motion.li key={step.title} className={kit.step} variants={reduce ? undefined : riseVariants}>
+                  <span className={kit.stepNode} aria-hidden="true">
+                    {pad2(i + 1)}
                   </span>
-                  <h3 className={styles.procTitle}>{step.title}</h3>
-                  <p className={styles.procText}>{step.text}</p>
-                </TiltCard>
-              </motion.li>
-            ))}
-          </motion.ol>
+                  <div className={kit.stepBody}>
+                    <h3 className={kit.stepTitle}>{step.title}</h3>
+                    <p className={kit.stepText}>{step.text}</p>
+                  </div>
+                </motion.li>
+              ))}
+            </motion.ol>
+          </div>
         </div>
       </section>
 
-      {/* ========================= animation 6: staggered 3D industries grid */}
-      <section className={styles.industries} aria-labelledby="about-ind-title">
-        <span className={styles.blobGold} aria-hidden="true" />
-
-        <div className={styles.inner}>
-          <motion.header
-            className={styles.secHead}
-            initial={reduce ? false : "hidden"}
-            whileInView="shown"
-            viewport={{ once: true, amount: 0.6 }}
-            variants={reduce ? undefined : headVariants}
+      {/* ---------------------------------------------------- industries */}
+      <section className={kit.section} aria-labelledby="about-ind-title">
+        <div className={kit.inner}>
+          <SectionHead
+            id="about-ind-title"
+            kicker="Who we serve"
+            lead="From trading floors to construction sites, energy to IT — we tailor the same accountable team to how your sector actually works."
+            reduce={reduce}
           >
-            <p className={styles.kicker}>
-              <span className={styles.kickerDot} aria-hidden="true" />
-              Who we serve
-            </p>
-            <h2 id="about-ind-title" className={styles.title}>
-              Built for the industries that <span className={styles.titleAccent}>drive the UAE</span>
-            </h2>
-            <p className={styles.lead}>
-              From trading floors to construction sites, energy to IT — we tailor the same accountable
-              team to how your sector actually works.
-            </p>
-          </motion.header>
+            Built for the industries that <span className={kit.titleAccent}>drive the UAE</span>
+          </SectionHead>
 
           <motion.ul
-            className={styles.indGrid}
-            initial={reduce ? false : "hidden"}
-            whileInView="shown"
-            viewport={{ once: true, amount: 0.15 }}
-            variants={reduce ? undefined : containerVariants}
+            ref={inds.ref}
+            className={`${styles.indGrid} ${kit.spotHost}`}
+            onPointerMove={inds.onPointerMove}
+            {...gridMotion}
           >
             {industries.map((ind) => (
-              <motion.li key={ind.id} className={styles.indCell} variants={reduce ? undefined : cardVariants}>
-                <TiltCard className={styles.indCard} max={8} lift={5} glare>
-                  <span className={styles.indIcon} aria-hidden="true">
-                    <MenuIcon name={ind.icon ?? "box"} width={22} height={22} />
-                  </span>
-                  <span className={styles.indSector}>{ind.category}</span>
-                  <h3 className={styles.indTitle}>{ind.title}</h3>
-                  <p className={styles.indText}>{ind.description}</p>
-                  <span className={styles.indMore} aria-hidden="true">
-                    Explore services
-                    <ArrowRight />
-                  </span>
-                  <Link
-                    href={ind.href}
-                    className={styles.indLink}
-                    aria-label={`Explore services for ${ind.title}`}
-                  />
+              <motion.li
+                key={ind.id}
+                data-spot=""
+                className={kit.cell}
+                style={accentStyle(ind.accent)}
+                variants={reduce ? undefined : cardVariants}
+              >
+                <TiltCard className={`${kit.glass} ${styles.indCard}`} max={7} lift={8}>
+                  <span className={kit.spotFill} aria-hidden="true" />
+                  <span className={kit.spot} aria-hidden="true" />
+                  <span className={kit.glow} aria-hidden="true" />
+                  <span className={kit.travel} aria-hidden="true" />
+
+                  <div className={styles.indMedia}>
+                    <span className={styles.indFrame}>
+                      <Image
+                        src={`/images/industries/${ind.id}.ind.webp`}
+                        alt={ind.imageAlt}
+                        fill
+                        className={styles.indImg}
+                        sizes="(max-width: 620px) 92vw, (max-width: 960px) 46vw, 400px"
+                      />
+                    </span>
+                    <span className={styles.indShade} aria-hidden="true" />
+                    <span className={styles.indCat}>{ind.category}</span>
+                  </div>
+
+                  <div className={styles.indBody}>
+                    <span className={`${kit.iconTile} ${styles.indIcon}`} aria-hidden="true">
+                      <MenuIcon name={ind.icon} width={22} height={22} />
+                    </span>
+                    <h3 className={kit.cardTitle}>{ind.title}</h3>
+                    <p className={kit.cardText}>{ind.description}</p>
+                    <span className={kit.more}>
+                      {ind.cta ?? "Explore industry"}
+                      <span className={kit.moreIcon} aria-hidden="true">
+                        <Arrow />
+                      </span>
+                    </span>
+                  </div>
+                  <Link href={ind.href} className={kit.cardLink} aria-label={`Explore ${ind.title}`} />
                 </TiltCard>
               </motion.li>
             ))}
@@ -544,40 +659,47 @@ export function AboutContent() {
         </div>
       </section>
 
-      {/* ============================================================= CTA */}
-      <section className={styles.ctaSection} aria-labelledby="about-cta-title">
-        <div className={styles.inner}>
-          <motion.div
-            className={styles.ctaPanel}
-            initial={reduce ? false : "hidden"}
-            whileInView="shown"
-            viewport={{ once: true, amount: 0.4 }}
-            variants={reduce ? undefined : featureVariants}
-          >
-            <span className={styles.ctaGlow} aria-hidden="true" />
-            <p className={styles.kicker}>
-              <span className={styles.kickerDot} aria-hidden="true" />
+      {/* ----------------------------------------------------------- cta */}
+      <section className={kit.ctaSection} aria-labelledby="about-cta-title">
+        <motion.div
+          className={kit.ctaPanel}
+          initial={reduce ? false : { opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: EASE }}
+        >
+          <span className={kit.ctaGrid} aria-hidden="true" />
+          <span className={kit.ctaGlow} aria-hidden="true" />
+          <span className={kit.ctaGlowB} aria-hidden="true" />
+          <span className={kit.liveBorder} aria-hidden="true" />
+
+          <div className={kit.ctaCopy}>
+            <p className={kit.kicker}>
+              <span className={kit.kickerDot} aria-hidden="true" />
               Start the conversation
             </p>
-            <h2 id="about-cta-title" className={styles.ctaTitle}>
-              Put one accountable team <span className={styles.titleAccent}>behind your next move</span>
+            <h2 id="about-cta-title" className={kit.ctaTitle}>
+              Put one accountable team <span className={kit.titleAccent}>behind your next move</span>
             </h2>
-            <p className={styles.ctaLead}>
-              Tell us what you&apos;re planning and we&apos;ll map out exactly what&apos;s needed —
-              before any work begins.
+            <p className={kit.ctaLead}>
+              Tell us what you&apos;re planning and we&apos;ll map out exactly what&apos;s needed — before any work
+              begins.
             </p>
-            <div className={styles.ctaActions}>
-              <Link href={ROUTES.contact} className={styles.primary}>
-                Get in touch
-                <span className={styles.primaryIcon} aria-hidden="true"><ArrowRight /></span>
-              </Link>
-              <a href={CONTACT.phoneHref} className={styles.secondary}>
-                Call {CONTACT.phoneDisplay}
-              </a>
-            </div>
-          </motion.div>
-        </div>
+          </div>
+          <div className={kit.ctaActions}>
+            <Link href={ROUTES.contact} className={kit.primary}>
+              Get in touch
+              <span className={kit.primaryIcon} aria-hidden="true">
+                <Arrow />
+              </span>
+            </Link>
+            <a href={CONTACT.phoneHref} className={kit.secondary}>
+              <Phone />
+              Call {CONTACT.phoneDisplay}
+            </a>
+          </div>
+        </motion.div>
       </section>
-    </>
+    </div>
   );
 }

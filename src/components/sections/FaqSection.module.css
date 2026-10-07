@@ -53,15 +53,27 @@
 .inner {
   position: relative;
   z-index: 1;
-  width: min(880px, calc(100% - 48px));
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: start;
+  gap: clamp(32px, 5vw, 80px);
+  width: min(1240px, calc(100% - 48px));
   margin-inline: auto;
+}
+
+/* intro + contact card ride alongside the questions on wide screens */
+.aside {
+  position: sticky;
+  top: calc(var(--header-offset, 96px) + 24px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(26px, 3vw, 34px);
 }
 
 /* ------------------------------------------------------------------- head */
 
 .head {
-  text-align: center;
-  margin-bottom: clamp(32px, 5vw, 52px);
+  margin: 0;
 }
 
 .kicker {
@@ -102,30 +114,12 @@
 }
 
 .lead {
-  margin: 18px auto 0;
-  max-width: 54ch;
+  margin: 18px 0 0;
+  max-width: 46ch;
   color: #a7b4cb;
   font-size: clamp(15px, 1.15vw, 17px);
   line-height: 1.7;
   text-wrap: pretty;
-}
-
-.leadLink {
-  color: var(--gold-soft);
-  font-weight: 600;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(236, 201, 130, 0.4);
-  transition: border-color 0.25s var(--ease);
-}
-
-.leadLink:hover {
-  border-color: var(--gold-soft);
-}
-
-.leadLink:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-  border-radius: 3px;
 }
 
 /* ------------------------------------------------------------------- list */
@@ -190,7 +184,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: clamp(12px, 1.6vw, 18px);
   width: 100%;
   padding: 20px clamp(18px, 2.4vw, 26px);
   border: 0;
@@ -208,6 +202,23 @@
   outline: none;
   box-shadow: var(--focus-ring);
   border-radius: 16px;
+}
+
+.num {
+  flex-shrink: 0;
+  align-self: flex-start;
+  min-width: 26px;
+  padding-top: 0.42em;
+  color: rgba(236, 201, 130, 0.7);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.35s var(--ease);
+}
+
+.item[data-open] .num {
+  color: var(--gold-soft);
 }
 
 .qText {
@@ -254,7 +265,8 @@
 
 .answer {
   margin: 0;
-  padding: 0 clamp(18px, 2.4vw, 26px) 22px;
+  /* aligned under the question text, past the number column */
+  padding: 0 clamp(18px, 2.4vw, 26px) 22px calc(clamp(18px, 2.4vw, 26px) + 26px + clamp(12px, 1.6vw, 18px));
   max-width: 68ch;
   color: #b4c0d6;
   font-size: clamp(14px, 1.15vw, 15.5px);
@@ -262,18 +274,231 @@
   text-wrap: pretty;
 }
 
+
+/* ------------------------------------------------------------ help card */
+
+.helpWrap {
+  will-change: transform, opacity;
+}
+
+.help {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(22px, 2.2vw, 28px) clamp(20px, 2vw, 26px);
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgba(36, 83, 214, 0.22), transparent 60%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 30px 60px -34px rgba(2, 6, 30, 0.95);
+}
+
+/* travelling colour on the border only — the card's interior stays still */
+.help::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1.4px;
+  pointer-events: none;
+  background:
+    conic-gradient(
+      from var(--border-angle),
+      rgba(255, 255, 255, 0.1) 0deg,
+      var(--ice) 70deg,
+      var(--gold-soft) 140deg,
+      rgba(255, 255, 255, 0.1) 210deg,
+      rgba(255, 255, 255, 0.1) 360deg
+    );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: borderTravel 6s linear infinite;
+}
+
+.helpTitle {
+  margin: 0 0 8px;
+  color: var(--text-strong);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.helpText {
+  margin: 0 0 18px;
+  color: var(--text-muted);
+  font-size: 14.5px;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.helpLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.helpLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  color: var(--text-strong);
+  font-size: 15px;
+  font-weight: 650;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.helpLink:hover {
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 0 0 1px rgba(220, 169, 88, 0.4);
+}
+
+.helpLink:focus-visible,
+.helpCta:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.helpLinkIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  color: var(--gold-soft);
+  background: rgba(220, 169, 88, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(220, 169, 88, 0.28);
+}
+
+.helpLinkText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.helpLinkLabel {
+  color: var(--text-muted);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.helpCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 50px;
+  margin-top: 16px;
+  padding: 0 7px 0 20px;
+  border-radius: 13px;
+  color: #0a1230;
+  font-size: 15px;
+  font-weight: 650;
+  text-decoration: none;
+  background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+  box-shadow:
+    0 16px 32px -16px rgba(220, 169, 88, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.helpCta:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 22px 40px -16px rgba(220, 169, 88, 0.95),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.helpCtaIcon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  color: var(--gold-soft);
+  background: #0a1230;
+  transition: transform 0.3s var(--ease);
+}
+
+.helpCta:hover .helpCtaIcon {
+  transform: translateX(2px);
+}
+
 /* ------------------------------------------------------------- responsive */
+
+@media (max-width: 960px) {
+  .inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* unwrap the column so the contact card follows the questions */
+  .aside {
+    display: contents;
+  }
+
+  .head {
+    order: 1;
+  }
+
+  .list {
+    order: 2;
+  }
+
+  .helpWrap {
+    order: 3;
+    width: min(100%, 520px);
+  }
+}
+
+@media (max-width: 520px) {
+  .trigger {
+    padding-block: 18px;
+  }
+
+  .answer {
+    padding-left: clamp(18px, 2.4vw, 26px);
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .item,
+  .num,
   .icon,
   .plusBar,
-  .leadLink {
+  .helpLink,
+  .helpCta,
+  .helpCtaIcon {
     transition: none;
   }
 
-  .item[data-open]::after {
+  .helpCta:hover,
+  .helpCta:hover .helpCtaIcon {
+    transform: none;
+  }
+
+  .item[data-open]::after,
+  .help::before {
     animation: none;
+  }
+
+  .helpWrap {
+    will-change: auto;
   }
 }
 

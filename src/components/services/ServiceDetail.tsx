@@ -185,7 +185,7 @@ export function ServiceDetail({ service, detail }: ServiceDetailProps) {
                 className={styles.heroImg}
                 sizes="(max-width: 960px) 92vw, 540px"
                 quality={88}
-                priority
+                preload
                 style={service.menuImage?.position ? { objectPosition: service.menuImage.position } : undefined}
               />
               <span className={styles.heroMediaShade} aria-hidden="true" />

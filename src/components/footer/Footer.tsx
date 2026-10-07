@@ -127,7 +127,10 @@ export function Footer() {
         >
           {/* featured brand card — signature pointer-tilt 3D */}
           <motion.div className={styles.brandCell} variants={reduce ? undefined : colVariants}>
-            <TiltCard className={styles.brandCard} max={7} lift={6} glare>
+            <TiltCard className={styles.brandCard} max={7} lift={6} glare={false}>
+              {/* colour halo outside the edge + travelling multi-colour frame */}
+              <span className={styles.brandAura} aria-hidden="true" />
+              <span className={styles.brandBorder} aria-hidden="true" />
               <Link href={ROUTES.home} className={styles.logo} aria-label="MRZ — home">
                 <Image
                   src="/brand/mrz-logo-dark-surface.webp"
@@ -205,7 +208,7 @@ export function Footer() {
           </motion.nav>
 
           {/* company links */}
-          <motion.nav className={styles.col} aria-label="Company" variants={reduce ? undefined : colVariants}>
+          <motion.nav className={`${styles.col} ${styles.colCompany}`} aria-label="Company" variants={reduce ? undefined : colVariants}>
             <h3 className={styles.colTitle}>Company</h3>
             <ul className={styles.linkList}>
               {COMPANY_LINKS.map((l) => (

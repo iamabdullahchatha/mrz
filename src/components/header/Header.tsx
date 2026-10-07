@@ -48,7 +48,9 @@ function HeaderInner() {
   const light = usePointerLight();
 
   /* ---- scroll: one smoothed 0→1 progress value drives every compact-state property */
-  const { scrollY } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
+  const smoothPage = useSpring(scrollYProgress, { stiffness: 170, damping: 32, mass: 0.4 });
+  const pageProgress = reduce ? scrollYProgress : smoothPage;
   const rawProgress = useTransform(scrollY, [0, SCROLL_RANGE], [0, 1], { clamp: true });
   const smoothProgress = useSpring(rawProgress, { stiffness: 220, damping: 34, mass: 0.7 });
   const progress = reduce ? rawProgress : smoothProgress;
@@ -157,6 +159,7 @@ function HeaderInner() {
         ) : null}
       </AnimatePresence>
       <MobileScrim open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <motion.span className={styles.topFade} style={{ opacity: progress }} aria-hidden="true" />
 
       <motion.div
         ref={shellRef}
@@ -175,6 +178,8 @@ function HeaderInner() {
           >
             <motion.span className={styles.barShadow} style={{ opacity: shadowOpacity }} aria-hidden="true" />
             <GlassLayers variant="bar" density={progress} />
+            <span className={styles.barTravel} aria-hidden="true" />
+            <motion.span className={styles.readProgress} style={{ scaleX: pageProgress }} aria-hidden="true" />
 
             <div className={styles.barInner}>
               <Link href={ROUTES.home} className={styles.logo} aria-label="MRZ UAE — home" onClick={closeAll}>

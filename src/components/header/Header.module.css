@@ -89,9 +89,64 @@
     0 30px 80px -34px rgba(36, 86, 235, 0.6);
 }
 
+/* soft veil behind the floating bar once the page scrolls, so content passing
+   under the gap above and beside the bar never reads sharply through it */
+.topFade {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 0;
+  height: 128px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(4, 9, 30, 0.86) 0%, rgba(4, 9, 30, 0.5) 52%, rgba(4, 9, 30, 0) 100%);
+}
+
+/* a slow champagne-to-ice light that travels around the bar's edge */
+.barTravel {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  opacity: 0.7;
+  background: conic-gradient(
+    from var(--border-angle),
+    transparent 0deg,
+    rgba(239, 201, 131, 0.95) 36deg,
+    rgba(191, 230, 255, 0.85) 84deg,
+    transparent 132deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: hdTravel 11s linear infinite;
+}
+
+/* reading progress — fills along the bar's foot as the page scrolls */
+.readProgress {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 0;
+  z-index: 2;
+  height: 2px;
+  border-radius: 2px;
+  pointer-events: none;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, #d6a352 0%, #f8e0ab 40%, #bfe6ff 75%, #7da6ff 100%);
+  box-shadow: 0 0 10px rgba(239, 201, 131, 0.55);
+}
+
 .barInner {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -415,6 +470,23 @@
     transform 0.35s var(--hd-ease),
     box-shadow 0.35s var(--hd-ease);
   -webkit-tap-highlight-color: transparent;
+}
+
+/* an occasional idle shine, so the CTA catches the eye without hover */
+.contactCta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 36%, rgba(255, 255, 255, 0.5) 50%, transparent 64%);
+  transform: translateX(-130%);
+  animation: ctaShine 7s var(--hd-ease) 2s infinite;
+}
+
+.contactCta:hover::after {
+  animation: none;
+  opacity: 0;
 }
 
 .contactCta > span:not(.contactSheen) {
@@ -1577,11 +1649,39 @@
   }
 }
 
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes hdTravel {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+@keyframes ctaShine {
+  0% {
+    transform: translateX(-130%);
+  }
+  16%,
+  100% {
+    transform: translateX(130%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .contactSheen,
+  .contactCta::after,
   .glassGlare,
   .pvSheen {
     display: none;
+  }
+
+  .barTravel {
+    animation: none;
+    opacity: 0.35;
   }
 
   .contactCta,

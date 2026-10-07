@@ -445,14 +445,29 @@
     gap: 14px;
   }
 
+  /* two-up on a four-track grid, so an odd last card can sit centred instead
+     of leaving an empty slot beside it */
   .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .cell {
+    grid-column: span 2;
+  }
+
+  .cell:last-child:nth-child(odd) {
+    grid-column: 2 / span 2;
   }
 }
 
 @media (max-width: 620px) {
   .grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cell,
+  .cell:last-child:nth-child(odd) {
+    grid-column: auto;
   }
 }
 

@@ -5,6 +5,20 @@
   --gold: #dca958;
   --gold-soft: #ecc982;
   --ice: #bfe6ff;
+  --copper: #e0894a;
+  --rose: #e46fa3;
+  --violet: #8d72ff;
+  --royal: #3f72ff;
+  --aqua: #5fd4e6;
+  /* one shared palette for the brand card's frame + aura */
+  --brand-spectrum:
+    var(--gold-soft) 0deg,
+    var(--copper) 55deg,
+    var(--rose) 115deg,
+    var(--violet) 175deg,
+    var(--royal) 235deg,
+    var(--aqua) 295deg,
+    var(--gold-soft) 360deg;
 
   position: relative;
   isolation: isolate;
@@ -139,11 +153,47 @@
 /* ------------------------------------------------------- featured brand card */
 
 .brandCell {
+  position: relative;
+  isolation: isolate;
   perspective: 1000px;
+}
+
+/* soft spectrum halo around the card's edge. The wrapper's ring mask cuts out the
+   card itself, so the colour only ever glows OUTSIDE the frame — never through the
+   glass. The blurred colour lives on ::before, inset well inside the wrapper, so it
+   has fully faded before the wrapper's outer edge. */
+.brandAura {
+  position: absolute;
+  inset: -40px;
+  z-index: -1;
+  padding: 40px;
+  border-radius: 62px;
+  pointer-events: none;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.5;
+  transition: opacity 0.5s var(--ease);
+}
+
+.brandAura::before {
+  content: "";
+  position: absolute;
+  inset: 32px;
+  border-radius: 30px;
+  background: conic-gradient(from var(--brand-angle), var(--brand-spectrum));
+  filter: blur(10px);
+  animation: brandSpin 7s linear infinite;
+}
+
+.brandCell:hover .brandAura {
+  opacity: 0.85;
 }
 
 .brandCard {
   position: relative;
+  z-index: 1;
   height: 100%;
   padding: clamp(26px, 2vw, 34px) clamp(24px, 1.8vw, 30px) clamp(28px, 2.2vw, 34px);
   border-radius: 22px;
@@ -175,6 +225,43 @@
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
   opacity: 0.85;
+}
+
+/* full-spectrum frame that travels around the card, with a bright comet riding it */
+.brandBorder {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  background: conic-gradient(from var(--brand-angle), var(--brand-spectrum));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.82;
+  animation: brandSpin 7s linear infinite;
+  transition: opacity 0.4s var(--ease);
+}
+
+.brandBorder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--comet-angle),
+    transparent 0deg,
+    rgba(255, 255, 255, 0.9) 16deg,
+    transparent 48deg,
+    transparent 360deg
+  );
+  animation: cometSpin 4.2s linear infinite;
+}
+
+.brandCell:hover .brandBorder {
+  opacity: 1;
 }
 
 .logo {
@@ -324,9 +411,14 @@
 
 /* the 10-item services directory flows into two sub-columns */
 .servicesList {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 13px clamp(14px, 1.6vw, 26px);
+  display: block;
+  columns: 2;
+  column-gap: clamp(14px, 1.6vw, 26px);
+}
+
+.servicesList > li {
+  padding-bottom: 13px;
+  break-inside: avoid;
 }
 
 .link {
@@ -487,6 +579,53 @@
   .col + .col::before {
     display: none;
   }
+
+  /* the short company list runs across the full row instead of a lone column */
+  .colCompany {
+    grid-column: 1 / -1;
+  }
+
+  .colCompany .linkList {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 14px clamp(22px, 4vw, 36px);
+  }
+}
+
+/* tablet: the card spans the full row, so lay its contact list beside the brand */
+@media (min-width: 621px) and (max-width: 1040px) {
+  /* a full-row card is wide, so the depth parallax would push the logo out to the
+     edge — deepen the perspective and flatten the layers to keep them in place */
+  .brandCell {
+    perspective: 2200px;
+  }
+
+  .logo {
+    transform: translateZ(14px);
+  }
+
+  .brandLine {
+    transform: translateZ(6px);
+  }
+
+  .brandCard {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(28px, 5vw, 56px);
+  }
+
+  .logo {
+    justify-self: start;
+  }
+
+  .contact {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    margin: 0;
+    transform: translateZ(10px);
+  }
 }
 
 @media (max-width: 620px) {
@@ -496,7 +635,7 @@
   }
 
   .servicesList {
-    grid-template-columns: minmax(0, 1fr);
+    columns: 1;
   }
 
   .bottom {
@@ -510,7 +649,50 @@
   }
 }
 
+/* touch screens: keep the frame travelling, but hold the blurred aura still */
+@media (hover: none) {
+  .brandAura::before {
+    animation: none;
+  }
+}
+
+@property --brand-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --comet-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes brandSpin {
+  to {
+    --brand-angle: 360deg;
+  }
+}
+
+@keyframes cometSpin {
+  to {
+    --comet-angle: 360deg;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .brandAura,
+  .brandAura::before,
+  .brandBorder,
+  .brandBorder::after {
+    animation: none;
+    transition: none;
+  }
+
+  .brandBorder::after {
+    display: none;
+  }
+
   .link,
   .contactLink,
   .contactIcon,

@@ -167,6 +167,18 @@
   align-items: center;
 }
 
+/* Desktop: cards alternate sides, so each row tucks up under the one before it
+   — the timeline reads as one continuous zig-zag instead of four sparse rows. */
+@media (min-width: 761px) {
+  .steps {
+    gap: 0;
+  }
+
+  .step + .step {
+    margin-top: clamp(-74px, -5vw, -48px);
+  }
+}
+
 .center {
   grid-column: 2;
   grid-row: 1;
@@ -230,6 +242,36 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.2),
     0 30px 60px -34px rgba(2, 6, 30, 0.9);
   transform-style: preserve-3d;
+  transition: box-shadow 0.4s var(--ease);
+}
+
+/* gold hairline ring — brightens on hover; the interior stays still */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(150deg, rgba(236, 201, 130, 0.5) 0%, rgba(255, 255, 255, 0.1) 30%, transparent 55%, rgba(120, 160, 255, 0.28) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.7;
+  transition: opacity 0.4s var(--ease);
+}
+
+.card:hover {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 36px 70px -32px rgba(2, 6, 30, 1),
+    0 0 42px -18px rgba(220, 169, 88, 0.55);
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 /* connector from the card across to the node on the rail */
@@ -254,20 +296,24 @@
 
 .no {
   position: absolute;
-  top: 12px;
-  font-size: 30px;
+  top: clamp(20px, 1.9vw, 26px);
+  font-size: clamp(34px, 3vw, 42px);
   font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.02em;
-  color: rgba(236, 201, 130, 0.22);
+  letter-spacing: -0.04em;
+  background: linear-gradient(160deg, var(--gold-soft) 0%, rgba(236, 201, 130, 0.55) 45%, rgba(143, 178, 255, 0.35) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.9;
 }
 
 .left .no {
-  left: 18px;
+  left: clamp(18px, 1.7vw, 24px);
 }
 
 .right .no {
-  right: 18px;
+  right: clamp(18px, 1.7vw, 24px);
 }
 
 .icon {
@@ -302,8 +348,8 @@
 /* ---- node (circle on the rail) ---- */
 
 .node {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: radial-gradient(circle at 40% 35%, var(--gold-soft), var(--gold) 70%);
   box-shadow:
@@ -360,12 +406,18 @@
   .left .no,
   .right .no {
     left: auto;
-    right: 16px;
+    right: 18px;
+    font-size: 30px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cardWrap {
     will-change: auto;
+  }
+
+  .card,
+  .card::before {
+    transition: none;
   }
 }

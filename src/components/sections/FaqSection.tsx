@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion, type Variants } from "framer-motion";
-import { ROUTES } from "@/lib/routes";
+import { Arrow, Mail, Phone, Plus } from "@/components/common/kitIcons";
+import { CONTACT, ROUTES } from "@/lib/routes";
 import styles from "./FaqSection.module.css";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -35,15 +36,6 @@ const FAQS = [
   },
 ];
 
-function Plus() {
-  return (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" aria-hidden="true">
-      <path d="M12 5v14" className={styles.plusBar} />
-      <path d="M5 12h14" />
-    </svg>
-  );
-}
-
 const listVariants: Variants = {
   hidden: {},
   shown: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
@@ -55,10 +47,12 @@ const itemVariants: Variants = {
 };
 
 /**
- * Frequently asked questions — an accessible single-open accordion. Items stagger
- * in once as the list scrolls into view (reveal on scroll-down only, no reverse),
- * and each panel expands/collapses with a height animation. Anchored at #faqs to
- * match the site's FAQs nav link (routes.faqs -> /#faqs).
+ * Frequently asked questions — the intro and a direct-contact card sit in a
+ * sticky column beside an accessible single-open accordion. Items stagger in
+ * once as the list scrolls into view (reveal on scroll-down only, no reverse),
+ * and each panel expands/collapses with a height animation. Anchored at #faqs
+ * to match the site's FAQs nav link (routes.faqs -> /#faqs). Below 960px the
+ * column unwraps so the contact card follows the questions.
  */
 export function FaqSection() {
   const reduce = useReducedMotion() ?? false;
@@ -70,22 +64,68 @@ export function FaqSection() {
       <span className={styles.blobGold} aria-hidden="true" />
 
       <div className={styles.inner}>
-        <header className={styles.head}>
-          <p className={styles.kicker}>
-            <span className={styles.kickerDot} aria-hidden="true" />
-            Answers
-          </p>
-          <h2 id="faqs-title" className={styles.title}>
-            Frequently asked <span className={styles.titleAccent}>questions</span>
-          </h2>
-          <p className={styles.lead}>
-            The essentials about working with MRZ. Still have a question?{" "}
-            <Link href={ROUTES.contact} className={styles.leadLink}>
-              Talk to our team
-            </Link>
-            .
-          </p>
-        </header>
+        <div className={styles.aside}>
+          <motion.header
+            className={styles.head}
+            initial={reduce ? false : "hidden"}
+            whileInView="shown"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={reduce ? undefined : listVariants}
+          >
+            <motion.p className={styles.kicker} variants={reduce ? undefined : itemVariants}>
+              <span className={styles.kickerDot} aria-hidden="true" />
+              Answers
+            </motion.p>
+            <motion.h2 id="faqs-title" className={styles.title} variants={reduce ? undefined : itemVariants}>
+              Frequently asked <span className={styles.titleAccent}>questions</span>
+            </motion.h2>
+            <motion.p className={styles.lead} variants={reduce ? undefined : itemVariants}>
+              The essentials about working with MRZ — one team, one point of contact, and a clear plan
+              before any work begins.
+            </motion.p>
+          </motion.header>
+
+          <motion.div
+            className={styles.helpWrap}
+            initial={reduce ? false : { opacity: 0, y: 26 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.55, ease: EASE }}
+          >
+            <div className={styles.help}>
+              <h3 className={styles.helpTitle}>Still have questions?</h3>
+              <p className={styles.helpText}>
+                Talk to the team directly — you&apos;ll always be speaking to the people who do the work.
+              </p>
+              <div className={styles.helpLinks}>
+                <a href={CONTACT.phoneHref} className={styles.helpLink}>
+                  <span className={styles.helpLinkIcon} aria-hidden="true">
+                    <Phone />
+                  </span>
+                  <span className={styles.helpLinkText}>
+                    <span className={styles.helpLinkLabel}>Call us</span>
+                    {CONTACT.phoneDisplay}
+                  </span>
+                </a>
+                <a href={`mailto:${CONTACT.email}`} className={styles.helpLink}>
+                  <span className={styles.helpLinkIcon} aria-hidden="true">
+                    <Mail />
+                  </span>
+                  <span className={styles.helpLinkText}>
+                    <span className={styles.helpLinkLabel}>Email</span>
+                    {CONTACT.email}
+                  </span>
+                </a>
+              </div>
+              <Link href={ROUTES.contact} className={styles.helpCta}>
+                Talk to our team
+                <span className={styles.helpCtaIcon} aria-hidden="true">
+                  <Arrow size={16} />
+                </span>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
 
         <motion.ul
           className={styles.list}
@@ -114,9 +154,12 @@ export function FaqSection() {
                     aria-controls={panelId}
                     onClick={() => setOpen(isOpen ? null : i)}
                   >
+                    <span className={styles.num} aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
                     <span className={styles.qText}>{item.q}</span>
                     <span className={styles.icon} aria-hidden="true">
-                      <Plus />
+                      <Plus size={20} barClassName={styles.plusBar} />
                     </span>
                   </button>
                 </h3>

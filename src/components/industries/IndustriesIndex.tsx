@@ -258,7 +258,7 @@ export function IndustriesIndex() {
                           : "(max-width: 640px) 92vw, (max-width: 960px) 46vw, 400px"
                       }
                       quality={85}
-                      priority={featured}
+                      preload={featured}
                     />
                     <span className={styles.shade} aria-hidden="true" />
                   </div>
