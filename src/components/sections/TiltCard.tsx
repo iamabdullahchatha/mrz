@@ -36,6 +36,9 @@ export function TiltCard({ className, children, max = 10, lift = 0, glare = true
   const py = useMotionValue(0);
   const sx = useSpring(px, { stiffness: 150, damping: 17, mass: 0.6 });
   const sy = useSpring(py, { stiffness: 150, damping: 17, mass: 0.6 });
+  // the sheen rests invisible and only fades in while a mouse is over the card
+  const glareOn = useMotionValue(0);
+  const glareOpacity = useSpring(glareOn, { stiffness: 180, damping: 26 });
 
   const rotateY = useTransform(sx, [-0.5, 0.5], [-max, max]);
   const rotateX = useTransform(sy, [-0.5, 0.5], [max, -max]);
@@ -48,10 +51,12 @@ export function TiltCard({ className, children, max = 10, lift = 0, glare = true
     const r = e.currentTarget.getBoundingClientRect();
     px.set((e.clientX - r.left) / r.width - 0.5);
     py.set((e.clientY - r.top) / r.height - 0.5);
+    glareOn.set(1);
   };
   const reset = () => {
     px.set(0);
     py.set(0);
+    glareOn.set(0);
   };
 
   return (
@@ -75,6 +80,7 @@ export function TiltCard({ className, children, max = 10, lift = 0, glare = true
             pointerEvents: "none",
             zIndex: 6,
             background: glareBg,
+            opacity: glareOpacity,
           }}
         />
       ) : null}
