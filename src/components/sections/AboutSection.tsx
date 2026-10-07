@@ -9,7 +9,7 @@ import styles from "./AboutSection.module.css";
 
 const HIGHLIGHTS = [
   { icon: "building", title: "Based in Ajman, serving the UAE", text: "On-the-ground support from Free Zone setup to everyday operations." },
-  { icon: "layers", title: `${services.length} specialist services, one contact`, text: "Trade, technology, finance, people and documents — under one roof." },
+  { icon: "layers", title: `${services.length} specialist services, one contact`, text: "Trade, technology, engineering, people and documents — under one roof." },
   { icon: "shield", title: "Coordinated end to end", text: "One accountable team keeps every workstream moving together." },
 ];
 
@@ -65,8 +65,8 @@ export function AboutSection() {
           </h2>
           <p className={styles.lead}>
             From Ajman Free Zone setup to day-to-day operations, MRZ brings commercial brokerage,
-            trading, IT &amp; cyber security, accounting, HR and documents clearing under one roof —
-            coordinated end to end, so you work with one accountable team instead of ten.
+            trading, IT &amp; cyber security, HR and documents clearing under one roof —
+            coordinated end to end, so you work with one accountable team instead of nine.
           </p>
 
           <ul className={styles.highlights}>

@@ -101,26 +101,6 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     ],
   },
 
-  "accounting-bookkeeping": {
-    tagline: "Clean records, reconciliation and practical monthly reporting.",
-    overview: [
-      "We keep your records clean and reporting-ready — handling bookkeeping, reconciliation and categorisation, with practical monthly reporting that reflects how your business actually runs.",
-      "Accurate, well-organised books mean faster decisions and far less friction when it matters most.",
-    ],
-    included: [
-      { title: "Bookkeeping", text: "Day-to-day records kept accurate and up to date." },
-      { title: "Reconciliation", text: "Accounts reconciled so the numbers always tie out." },
-      { title: "Categorisation", text: "Transactions organised for clear, useful reporting." },
-      { title: "Monthly reporting", text: "Practical reports that show where the business stands." },
-    ],
-    outcomes: ["Books that are always reporting-ready", "Numbers you can rely on", "Clear monthly visibility", "Less friction at period-end"],
-    faqs: [
-      { q: "What's included in your bookkeeping support?", a: "Day-to-day bookkeeping, reconciliation, clear transaction categorisation and practical monthly reporting that reflects how your business actually runs." },
-      { q: "Will my books be ready when I need them?", a: "Yes — records are kept accurate and reporting-ready, with accounts reconciled so the numbers always tie out and far less friction at period-end." },
-      { q: "How do we start?", a: "Start with a free consultation. We review your current records and set out a clear, documentation-led plan before any work begins." },
-    ],
-  },
-
   "management-services": {
     tagline: "Coordination and follow-up that keep teams aligned.",
     overview: [
@@ -221,6 +201,15 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     ],
   },
 };
+
+/* How we work — the firm's documentation-led, consultation-first approach,
+   the same clear path on every engagement. Shared by the index and detail pages. */
+export const PROCESS_STEPS: { n: string; title: string; text: string }[] = [
+  { n: "01", title: "Discovery", text: "We map your goals, constraints and timeline before any work begins." },
+  { n: "02", title: "Documentation-led plan", text: "A clear, compliance-first scope and checklist you approve up front." },
+  { n: "03", title: "Delivery", text: "One accountable team does the work, with a single point of contact." },
+  { n: "04", title: "Follow-through", text: "Readiness reviews and clear follow-up keep approvals moving smoothly." },
+];
 
 /** Per-accent colour pair used to tint borders, glows and highlights. */
 export const ACCENTS: Record<Accent, { main: string; soft: string }> = {

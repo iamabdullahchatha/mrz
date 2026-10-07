@@ -36,7 +36,6 @@ const CATEGORY_META: Record<string, { icon: string; tagline: string }> = {
   Trade: { icon: "exchange", tagline: "Brokerage, sourcing and import/export, coordinated end to end." },
   Technology: { icon: "chip", tagline: "IT consultancy and security-first cyber architecture." },
   People: { icon: "people", tagline: "HR consultancy and dependable workforce provision." },
-  Finance: { icon: "ledger", tagline: "Accounting and bookkeeping you can rely on." },
   Corporate: { icon: "office", tagline: "Management services that keep operations moving." },
   Compliance: { icon: "doc", tagline: "Documents clearing and regulatory paperwork, handled." },
   Engineering: { icon: "flame", tagline: "Petroleum and gas engineering consultancy." },
@@ -74,7 +73,7 @@ const PROCESS = [
   },
   {
     title: "Coordinate one team",
-    text: "Every workstream — trade, technology, finance, people and compliance — is run by one coordinated team, not a chain of vendors.",
+    text: "Every workstream — trade, technology, engineering, people and compliance — is run by one coordinated team, not a chain of vendors.",
   },
   {
     title: "Deliver and keep supporting",
@@ -86,7 +85,7 @@ const VALUES = [
   {
     icon: "layers",
     title: "Everything under one roof",
-    text: "Trade, technology, engineering, finance, people and compliance — coordinated by a single team instead of a dozen disconnected vendors.",
+    text: "Trade, technology, engineering, people and compliance — coordinated by a single team instead of a dozen disconnected vendors.",
   },
   {
     icon: "person",
@@ -197,9 +196,9 @@ export function AboutContent() {
               </h1>
               <p className={styles.heroLead}>
                 MRZ Management Services FZE LLC brings commercial brokerage, trading, IT &amp; cyber
-                security, engineering, accounting, HR and documents clearing together under one roof —
+                security, engineering, HR and documents clearing together under one roof —
                 coordinated end to end from our Ajman office, so you work with one accountable team
-                instead of ten.
+                instead of nine.
               </p>
               <div className={styles.heroActions}>
                 <Link href={ROUTES.contact} className={styles.primary}>
@@ -226,7 +225,7 @@ export function AboutContent() {
                 items={[
                   { key: "trade", icon: <MenuIcon name="exchange" /> },
                   { key: "tech", icon: <MenuIcon name="chip" /> },
-                  { key: "finance", icon: <MenuIcon name="ledger" /> },
+                  { key: "compliance", icon: <MenuIcon name="doc" /> },
                   { key: "corporate", icon: <MenuIcon name="office" /> },
                   { key: "engineering", icon: <MenuIcon name="flame" /> },
                   { key: "people", icon: <MenuIcon name="people" /> },
@@ -310,9 +309,9 @@ export function AboutContent() {
                 A single team for the <span className={styles.titleAccent}>whole of your business</span>
               </h2>
               <p className={styles.lead}>
-                MRZ was built on a simple idea: a business shouldn&apos;t need ten different vendors to
+                MRZ was built on a simple idea: a business shouldn&apos;t need nine different vendors to
                 move forward. From our Ajman office, we bring commercial brokerage, trading,
-                IT and cyber security, engineering, accounting, HR and documents clearing together under
+                IT and cyber security, engineering, HR and documents clearing together under
                 one roof.
               </p>
               <p className={styles.lead}>

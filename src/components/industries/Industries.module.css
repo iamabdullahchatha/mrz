@@ -1,4 +1,4 @@
-/* ============================================= Industries index + detail (shared) */
+/* ==================================================== Industry detail pages */
 
 .page {
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -29,8 +29,7 @@
 /* slow conic aurora — transform-only, so it is composited rather than repainted */
 .aurora,
 .overviewAurora,
-.sideAurora,
-.faqAurora {
+.sideAurora {
   position: absolute;
   z-index: 0;
   border-radius: 50%;
@@ -76,16 +75,12 @@
   animation: auroraSpin 56s linear infinite;
 }
 
-.blobRoyal,
-.blobGold {
+.blobRoyal {
   position: absolute;
   z-index: 0;
   border-radius: 50%;
   filter: blur(90px);
   pointer-events: none;
-}
-
-.blobRoyal {
   top: 2%;
   left: -8%;
   width: 440px;
@@ -93,19 +88,9 @@
   background: radial-gradient(circle, rgba(36, 83, 214, 0.42), transparent 70%);
 }
 
-.blobGold {
-  right: -10%;
-  bottom: -14%;
-  width: 420px;
-  height: 420px;
-  background: radial-gradient(circle, rgba(220, 169, 88, 0.22), transparent 70%);
-}
-
 .heroInner,
-.listSection,
 .ctaSection,
-.body,
-.inner {
+.body {
   position: relative;
   z-index: 1;
   width: min(1240px, calc(100% - 48px));
@@ -147,113 +132,7 @@
   letter-spacing: -0.035em;
 }
 
-.titleAccent {
-  background: linear-gradient(100deg, var(--ice) 0%, #8fb2ff 45%, var(--gold-soft) 92%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.lead {
-  margin: 4px 0 0;
-  max-width: 62ch;
-  color: #a7b4cb;
-  font-size: clamp(15.5px, 1.2vw, 18px);
-  line-height: 1.7;
-  text-wrap: pretty;
-}
-
-/* ----------------------------------------------------------- index grid */
-
-.listSection {
-  padding-bottom: clamp(56px, 8vh, 96px);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(18px, 2.2vw, 28px);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  perspective: 1700px;
-}
-
-.cell {
-  perspective: 1200px;
-}
-
-/* poster card — the photo is clipped by .frame, never by the card itself, so the
-   translateZ layers keep their depth */
-.card {
-  position: relative;
-  display: block;
-  aspect-ratio: 3 / 2;
-  border-radius: 22px;
-  transform-style: preserve-3d;
-  overflow: visible;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 36px 70px -34px rgba(2, 6, 30, 0.95);
-  transition: box-shadow 0.4s var(--ease);
-}
-
-.card:hover {
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
-    0 50px 90px -30px rgba(2, 6, 30, 1),
-    0 0 46px -16px var(--glow, rgba(220, 169, 88, 0.45));
-}
-
-.glow {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: radial-gradient(120% 85% at 50% 118%, var(--glow, rgba(220, 169, 88, 0.42)), transparent 60%);
-  opacity: 0.5;
-  transition: opacity 0.4s var(--ease);
-}
-
-.card:hover .glow {
-  opacity: 1;
-}
-
-.frame {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: inherit;
-  overflow: hidden;
-}
-
-.img {
-  object-fit: cover;
-  transform: scale(1.02);
-  transition: transform 0.7s var(--ease);
-}
-
-.card:hover .img {
-  transform: scale(1.06);
-}
-
-.shade {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-  background: linear-gradient(
-    to top,
-    rgba(4, 8, 22, 0.92) 0%,
-    rgba(4, 8, 22, 0.58) 20%,
-    rgba(4, 8, 22, 0.1) 40%,
-    rgba(4, 8, 22, 0) 54%
-  );
-}
-
-/* travelling-colour border — idle on the index, lit on hover */
+/* travelling-colour border — idle until its host lights it */
 .travel {
   position: absolute;
   inset: 0;
@@ -275,146 +154,6 @@
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
   transition: opacity 0.4s var(--ease);
-}
-
-.card:hover .travel {
-  opacity: 1;
-  animation: borderTravel 4s linear infinite;
-}
-
-.topRow {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  right: 16px;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  pointer-events: none;
-  transform: translateZ(60px);
-}
-
-.iconTile {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 13px;
-  color: #fff;
-  background: linear-gradient(145deg, #2a5be0, #0a2a88);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.32),
-    inset 0 0 0 1px rgba(236, 201, 130, 0.25),
-    0 12px 22px -10px rgba(5, 12, 38, 0.9);
-  transition: box-shadow 0.4s var(--ease);
-}
-
-.card:hover .iconTile {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    inset 0 0 0 1px rgba(236, 201, 130, 0.6),
-    0 14px 26px -10px rgba(5, 12, 38, 1);
-}
-
-.cat {
-  padding: 7px 13px;
-  border-radius: 999px;
-  color: var(--gold-soft);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  background: rgba(6, 12, 38, 0.74);
-  box-shadow: inset 0 0 0 1px rgba(220, 169, 88, 0.42);
-}
-
-.overlay {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 22px clamp(18px, 2vw, 26px) clamp(18px, 2vw, 24px);
-  pointer-events: none;
-  transform: translateZ(42px);
-}
-
-.cardTitle {
-  margin: 0;
-  color: #fff;
-  font-size: clamp(19px, 1.5vw, 23px);
-  font-weight: 650;
-  line-height: 1.18;
-  letter-spacing: -0.015em;
-  text-wrap: balance;
-}
-
-.desc {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  margin: 0;
-  max-width: 44ch;
-  color: rgba(226, 232, 245, 0.82);
-  font-size: 13.5px;
-  line-height: 1.55;
-}
-
-.more {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 5px;
-  color: var(--gold-soft);
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
-.moreIcon {
-  display: grid;
-  place-items: center;
-  width: 27px;
-  height: 27px;
-  border-radius: 50%;
-  color: var(--gold-soft);
-  background: rgba(220, 169, 88, 0.14);
-  box-shadow: inset 0 0 0 1px rgba(220, 169, 88, 0.45);
-  transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
-}
-
-.moreIcon svg {
-  width: 15px;
-  height: 15px;
-  transition: transform 0.3s var(--ease);
-}
-
-.card:hover .moreIcon {
-  color: #0a1230;
-  background: var(--gold);
-}
-
-.card:hover .moreIcon svg {
-  transform: translateX(2px);
-}
-
-.cardLink {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  border-radius: inherit;
-  text-decoration: none;
-}
-
-.cardLink:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
 }
 
 /* -------------------------------------------------------------- detail hero */
@@ -1001,7 +740,6 @@
 
 /* ------------------------------------------------------- shared CTA + links */
 
-.listSection,
 .ctaSection {
   margin: 0 auto;
 }
@@ -1209,7 +947,6 @@
 }
 
 @media (max-width: 720px) {
-  .grid,
   .depthGrid,
   .svcGrid {
     grid-template-columns: minmax(0, 1fr);
@@ -1254,13 +991,11 @@
   .aurora,
   .overviewAurora,
   .sideAurora,
-  .faqAurora,
   .floatChip,
   .floatStat {
     animation: none;
   }
 
-  .card:hover .travel,
   .heroMedia .travel,
   .depthCard:hover .travel,
   .svcCard:hover .travel,
@@ -1268,12 +1003,6 @@
     animation: none;
   }
 
-  .img,
-  .card,
-  .card:hover .img,
-  .card:hover .moreIcon svg,
-  .moreIcon,
-  .moreIcon svg,
   .primary,
   .primaryIcon,
   .secondary,
@@ -1283,13 +1012,7 @@
   .faqIcon,
   .plusBar,
   .backLink,
-  .iconTile,
   .travel {
     transition: none;
-  }
-
-  .img,
-  .card:hover .img {
-    transform: none;
   }
 }

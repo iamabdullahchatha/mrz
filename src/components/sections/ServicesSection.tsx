@@ -25,7 +25,6 @@ const CARD_ALT: Record<string, string> = {
   "general-trading": "Aerial view of shipping containers and trucks at a logistics terminal",
   "cyber-security-architecture": "A secure cloud and padlock representing layered cyber security architecture",
   "information-technology-consultants": "Fibre-optic network cables connected to a server rack in a data centre",
-  "accounting-bookkeeping": "An accountant reviewing financial charts beside a calculator",
   "management-services": "A diverse management team collaborating around a table in a modern office",
   "petroleum-gas-engineering": "An offshore oil and gas platform silhouetted against a sunset sky",
   "human-resources-consultancy": "Two HR professionals in conversation at a bright office table",
@@ -58,15 +57,13 @@ export function ServicesSection() {
             </h2>
           </div>
           <p className={styles.lead}>
-            Ten specialist services — trade, technology, engineering, finance, people and compliance —
+            Nine specialist services — trade, technology, engineering, people and compliance —
             delivered by one coordinated UAE team.
           </p>
         </header>
 
-        {/* Home preview shows nine of the ten services; the full set (including
-            Documents Clearing) lives on the /services page via the CTA below. */}
         <ul className={styles.grid}>
-          {services.slice(0, 9).map((s) => (
+          {services.map((s) => (
             <li key={s.id} className={styles.cell}>
               <TiltCard className={styles.card} max={9} lift={8}>
                 <span className={styles.glow} aria-hidden="true" />

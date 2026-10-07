@@ -79,24 +79,6 @@ export const services: MenuEntry[] = [
     blurb: "Planning and support for reliable, scalable IT systems.",
   },
   {
-    id: "accounting-bookkeeping",
-    title: "Accounting & Bookkeeping",
-    description:
-      "Keep records clean and reporting-ready — bookkeeping, reconciliation, categorisation and practical monthly reporting support for businesses in the UAE.",
-    href: ROUTES.service.accountingBookkeeping,
-    image: "/images/services/accounting-bookkeeping.webp",
-    imageAlt: "Calculator, notebook and laptop arranged on an accountant's desk",
-    menuImage: {
-      src: "/images/services/accounting-bookkeeping.header.webp",
-      alt: "Accountants reviewing financial charts beside a calculator and laptop",
-      position: "34% center",
-    },
-    category: "Finance",
-    accent: "royal",
-    icon: "ledger",
-    blurb: "Clean records, reconciliation and practical monthly reporting.",
-  },
-  {
     id: "management-services",
     title: "Management Services",
     description:

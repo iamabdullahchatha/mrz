@@ -19,7 +19,6 @@ export const ROUTES = {
     generalTrading: "/services/general-trading",
     cyberSecurityArchitecture: "/services/cyber-security-architecture",
     itConsultancy: "/services/it-consultancy",
-    accountingBookkeeping: "/services/accounting-bookkeeping",
     managementServices: "/services/management-services",
     petroleumGasEngineering: "/services/petroleum-gas-engineering-consultancy",
     hrConsultancy: "/services/hr-consultancy",

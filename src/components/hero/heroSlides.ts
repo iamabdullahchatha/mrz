@@ -42,9 +42,9 @@ function fromService(id: string, image: string, alt: string): HeroSlide {
 }
 
 /**
- * Seven HD cards that together tell MRZ's story — the UAE base plus six
- * offerings spanning trade, technology, engineering, finance, corporate and
- * people. Distinct categories keep the deck visually and thematically varied.
+ * Six HD cards that together tell MRZ's story — the UAE base plus five
+ * offerings spanning trade, technology, engineering, corporate and people.
+ * Distinct categories keep the deck visually and thematically varied.
  */
 export const heroSlides: HeroSlide[] = [
   {
@@ -61,7 +61,6 @@ export const heroSlides: HeroSlide[] = [
   fromService("general-trading", "/images/hero/trade-port.webp", "Aerial view of a container port with cranes at dusk"),
   fromService("cyber-security-architecture", "/images/hero/cyber-circuit.webp", "Illuminated circuit board with glowing data pathways"),
   fromService("petroleum-gas-engineering", "/images/hero/petroleum-refinery.webp", "Oil and gas refinery lit up at night"),
-  fromService("accounting-bookkeeping", "/images/hero/accounting-desk.webp", "Desk with financial charts, a calculator and a notebook"),
   fromService("management-services", "/images/hero/management-meeting.webp", "Business team meeting around a table in a modern office"),
   fromService("human-resources-consultancy", "/images/hero/hr-consultancy.webp", "Two business professionals talking in a bright modern office lobby"),
 ];

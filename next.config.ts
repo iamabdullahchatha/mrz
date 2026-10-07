@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
       { pathname: "/brand/**", search: "" },
     ],
   },
+  async redirects() {
+    return [
+      // Accounting & Bookkeeping is no longer offered — send old links to the services index.
+      { source: "/services/accounting-bookkeeping", destination: "/services", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

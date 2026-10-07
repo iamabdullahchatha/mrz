@@ -24,15 +24,15 @@ export const industryDetails: Record<string, IndustryContent> = {
     tagline: "Brokerage, supplier coordination and clean paperwork for trading businesses.",
     overview: [
       "Trading moves fast, and every introduction, contract and shipment needs its paperwork in order. MRZ supports trading companies across general trade and commercial brokerage, coordinating suppliers and buyers while keeping documentation ready at each stage.",
-      "From operational setup to ongoing bookkeeping, one accountable team keeps your trading activity organised, compliant and easy to follow.",
+      "From operational setup to ongoing documents clearing, one accountable team keeps your trading activity organised, compliant and easy to follow.",
     ],
     challenges: [
       { title: "Sourcing and introductions", text: "Finding the right buyers and suppliers, and managing the conversations around them." },
       { title: "Documentation under pressure", text: "Contracts, invoices and trade paperwork that must be right before they are needed." },
-      { title: "Clean books", text: "Accurate records that keep pace with fast-moving transactions." },
+      { title: "Approvals and clearance", text: "Requirement checklists and follow-ups that stop UAE paperwork from holding up a shipment." },
     ],
-    outcomes: ["Relevant introductions, not cold leads", "Paperwork ready before it is required", "Organised records at every milestone", "One point of contact across trade and finance"],
-    serviceIds: ["commercial-brokers", "general-trading", "accounting-bookkeeping"],
+    outcomes: ["Relevant introductions, not cold leads", "Paperwork ready before it is required", "Organised records at every milestone", "One point of contact across trade and paperwork"],
+    serviceIds: ["commercial-brokers", "general-trading", "documents-clearing-services"],
     faqs: [
       { q: "Can you support both brokerage and general trading?", a: "Yes. Commercial brokerage and general trading are both delivered by the same accountable team, so introductions, supplier coordination and paperwork stay joined up." },
       { q: "How do you keep trade paperwork from slowing deals?", a: "Documentation is prepared and checked before it is needed, and every open item has a defined owner and next step, so deals keep moving." },
@@ -103,19 +103,19 @@ export const industryDetails: Record<string, IndustryContent> = {
   "corporate-smes": {
     tagline: "Practical back-office support for SMEs and growing organisations across the UAE.",
     overview: [
-      "Growing businesses need dependable back-office support without the overhead of building every function in-house. MRZ supports SMEs and established organisations with accounting, management services and people operations, all coordinated by one team.",
-      "We keep finance clean, operations coordinated and HR compliant, so leadership can focus on growth while the essentials run predictably.",
+      "Growing businesses need dependable back-office support without the overhead of building every function in-house. MRZ supports SMEs and established organisations with management services, people operations and documents clearing, all coordinated by one team.",
+      "We keep operations coordinated, HR compliant and paperwork moving, so leadership can focus on growth while the essentials run predictably.",
     ],
     challenges: [
-      { title: "Clean finance", text: "Accurate bookkeeping, reconciliation and monthly reporting that show where the business stands." },
+      { title: "Approvals and paperwork", text: "Requirement checklists and follow-ups that keep UAE documents moving without delays." },
       { title: "Operational coordination", text: "Plans, owners and follow-ups that keep teams pulling in the same direction." },
       { title: "People compliance", text: "HR practices and records that are consistent, fair and compliant." },
     ],
-    outcomes: ["Books that are always reporting-ready", "Teams pulling in the same direction", "Compliant, consistent HR practices", "One point of contact for the back office"],
-    serviceIds: ["accounting-bookkeeping", "management-services", "human-resources-consultancy", "other-human-resources-provision"],
+    outcomes: ["Fewer avoidable approval delays", "Teams pulling in the same direction", "Compliant, consistent HR practices", "One point of contact for the back office"],
+    serviceIds: ["management-services", "human-resources-consultancy", "other-human-resources-provision", "documents-clearing-services"],
     faqs: [
       { q: "Do you support smaller businesses as well as larger organisations?", a: "Yes. We work with SMEs and growing organisations across the UAE, scaling our support to match what the business needs." },
-      { q: "Can finance, operations and HR be handled by one provider?", a: "Yes. Accounting, management services and HR are coordinated by one accountable team with a single point of contact." },
+      { q: "Can operations, HR and paperwork be handled by one provider?", a: "Yes. Management services, HR and documents clearing are coordinated by one accountable team with a single point of contact." },
       { q: "How do we get started?", a: "Book a free consultation. We review your current back-office setup and give you a clear, documentation-led plan before any work begins." },
     ],
   },

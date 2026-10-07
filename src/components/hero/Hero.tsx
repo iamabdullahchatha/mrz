@@ -138,7 +138,7 @@ export function Hero() {
           </h1>
 
           <p className={styles.sub}>
-            Commercial brokerage, trading, IT &amp; cyber security, accounting, HR and documents
+            Commercial brokerage, trading, IT &amp; cyber security, HR and documents
             clearing — coordinated end to end by one UAE team.
           </p>
 

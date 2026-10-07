@@ -102,7 +102,7 @@ const CATEGORIES = [
     items: [
       {
         q: "What services does MRZ provide?",
-        a: "Ten specialist services under one team: commercial brokerage, general trading, IT consultancy, cyber security architecture, accounting & bookkeeping, management services, petroleum & gas engineering consultancy, HR consultancy, HR provision and UAE documents clearing.",
+        a: "Nine specialist services under one team: commercial brokerage, general trading, IT consultancy, cyber security architecture, management services, petroleum & gas engineering consultancy, HR consultancy, HR provision and UAE documents clearing.",
       },
       {
         q: "Where is MRZ based, and which areas do you serve?",
@@ -110,7 +110,7 @@ const CATEGORIES = [
       },
       {
         q: "Is MRZ really one team, or separate companies?",
-        a: "MRZ Management Services FZE LLC is a single, accountable team. Trade, technology, finance, people, engineering and compliance all sit under one roof — not separate vendors you have to line up and manage yourself.",
+        a: "MRZ Management Services FZE LLC is a single, accountable team. Trade, technology, engineering, people and compliance all sit under one roof — not separate vendors you have to line up and manage yourself.",
       },
     ],
   },
@@ -120,7 +120,7 @@ const CATEGORIES = [
     items: [
       {
         q: "Can you handle several services together, or just one at a time?",
-        a: "Both. You get a single accountable team and one point of contact, so trade, technology, finance, people and compliance work can run end to end together instead of across separate providers.",
+        a: "Both. You get a single accountable team and one point of contact, so trade, technology, engineering, people and compliance work can run end to end together instead of across separate providers.",
       },
       {
         q: "Who will I deal with day to day?",
@@ -142,7 +142,7 @@ const CATEGORIES = [
       },
       {
         q: "What happens after I get in touch?",
-        a: "We read your message, work out which parts of MRZ apply — trade, technology, finance, people or compliance — and come back with a clear next step and one named contact to take it forward.",
+        a: "We read your message, work out which parts of MRZ apply — trade, technology, engineering, people or compliance — and come back with a clear next step and one named contact to take it forward.",
       },
       {
         q: "Is the first consultation really free?",

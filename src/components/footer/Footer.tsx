@@ -113,7 +113,7 @@ export function Footer() {
             </h2>
           </div>
           <p className={styles.lead}>
-            Trade, technology, engineering, finance, people and compliance —
+            Trade, technology, engineering, people and compliance —
             coordinated from our Ajman office for businesses across the Emirates.
           </p>
         </motion.header>

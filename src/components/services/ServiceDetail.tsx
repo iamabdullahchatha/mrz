@@ -7,7 +7,7 @@ import { AnimatePresence, motion, useReducedMotion, type Variants } from "framer
 import { MenuIcon } from "@/components/header/menuIcons";
 import { TiltCard } from "@/components/sections/TiltCard";
 import { services } from "@/data/services";
-import { accentStyle, type ServiceDetail as ServiceDetailContent } from "@/data/serviceContent";
+import { PROCESS_STEPS, accentStyle, type ServiceDetail as ServiceDetailContent } from "@/data/serviceContent";
 import type { MenuEntry } from "@/data/types";
 import { CONTACT, ROUTES } from "@/lib/routes";
 import styles from "./ServiceDetail.module.css";
@@ -77,27 +77,18 @@ const whyGlyph = {
   ),
 };
 
-/* At-a-glance facts — all grounded in the firm (ten services, one team, UAE-wide,
+/* At-a-glance facts — all grounded in the firm (nine services, one team, UAE-wide,
    a free first consultation). Nothing here is invented. */
 const STATS: { value: string; label: string }[] = [
-  { value: "10", label: "Specialist services" },
+  { value: String(services.length), label: "Specialist services" },
   { value: "1", label: "Accountable team" },
   { value: "UAE", label: "Nationwide coverage" },
   { value: "Free", label: "First consultation" },
 ];
 
-/* How we work — the firm's documentation-led, consultation-first approach,
-   the same clear path on every engagement. */
-const PROCESS_STEPS: { n: string; title: string; text: string }[] = [
-  { n: "01", title: "Discovery", text: "We map your goals, constraints and timeline before any work begins." },
-  { n: "02", title: "Documentation-led plan", text: "A clear, compliance-first scope and checklist you approve up front." },
-  { n: "03", title: "Delivery", text: "One accountable team does the work, with a single point of contact." },
-  { n: "04", title: "Follow-through", text: "Readiness reviews and clear follow-up keep approvals moving smoothly." },
-];
-
 /* Why MRZ — grounded differentiators drawn from the firm's positioning. */
 const WHY_MRZ: { icon: ReactNode; title: string; text: string }[] = [
-  { icon: whyGlyph.team, title: "One accountable team", text: "Trade, technology, finance, people and compliance handled under a single team." },
+  { icon: whyGlyph.team, title: "One accountable team", text: "Trade, technology, engineering, people and compliance handled under a single team." },
   { icon: whyGlyph.doc, title: "Documentation-led", text: "Checklists and readiness reviews are built into every engagement from day one." },
   { icon: whyGlyph.contact, title: "A single point of contact", text: "No juggling providers — one relationship, coordinated from start to finish." },
   { icon: whyGlyph.pin, title: "Ajman to all the UAE", text: "Based at Amber Gem Tower on Sheikh Khalifa Street, supporting businesses right across the Emirates." },
