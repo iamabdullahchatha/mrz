@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(`https://${siteUrl}`),
   title: "MRZ Management Services FZE LLC | UAE Business, Trading, IT & Consultancy Services",
   description:
-    "MRZ Management Services FZE LLC provides commercial brokerage, general trading, IT consultancy, cyber security architecture, HR consultancy and UAE documents clearing services.",
+    "MRZ Management Services FZE LLC provides commercial brokerage, general trading, IT consultancy, cyber security architecture and HR consultancy services.",
   openGraph: {
     type: "website",
     siteName: "MRZ Management Services",
     title: "MRZ Management Services FZE LLC | UAE Business, Trading, IT & Consultancy Services",
     description:
-      "MRZ Management Services FZE LLC provides commercial brokerage, general trading, IT consultancy, cyber security architecture, HR consultancy and UAE documents clearing services.",
+      "MRZ Management Services FZE LLC provides commercial brokerage, general trading, IT consultancy, cyber security architecture and HR consultancy services.",
     images: [
       {
         url: "/brand/og-image.png",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MRZ Management Services FZE LLC | UAE Business, Trading, IT & Consultancy Services",
     description:
-      "MRZ Management Services FZE LLC provides commercial brokerage, general trading, IT consultancy, cyber security architecture, HR consultancy and UAE documents clearing services.",
+      "MRZ Management Services FZE LLC provides commercial brokerage, general trading, IT consultancy, cyber security architecture and HR consultancy services.",
     images: ["/brand/og-image.png"],
   },
 };

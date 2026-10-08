@@ -498,6 +498,32 @@
   grid-row: span 2;
 }
 
+/* desktop runs on six tracks: the featured sector plus two stacked beside it,
+   then rows of three — a closing pair shares the full width evenly, and a lone
+   closing card sits centred at the same width as the cards above it */
+@media (min-width: 961px) {
+  .bento {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .cell {
+    grid-column: span 2;
+  }
+
+  .cell[data-featured] {
+    grid-column: span 4;
+  }
+
+  .cell:nth-child(3n + 4):nth-last-child(2),
+  .cell:nth-child(3n + 4):nth-last-child(2) + .cell {
+    grid-column: span 3;
+  }
+
+  .cell:nth-child(3n + 4):last-child {
+    grid-column: 3 / span 2;
+  }
+}
+
 .card {
   position: relative;
   height: 100%;
@@ -1321,7 +1347,9 @@
     grid-auto-rows: clamp(280px, 42vw, 340px);
   }
 
-  .cell:last-child {
+  /* the featured card fills both columns, so the rest pair up from the second
+     card — an unpaired last card takes the full width instead of leaving a gap */
+  .cell:nth-child(even):last-child {
     grid-column: span 2;
   }
 
@@ -1338,7 +1366,7 @@
   }
 }
 
-/* below this the arc can't seat six labelled nodes, so they drop beneath it */
+/* below this the arc can't seat every labelled node, so they drop beneath it */
 @media (max-width: 860px) {
   .hero {
     --R: 820px;
@@ -1355,9 +1383,12 @@
     inset: auto;
   }
 
+  /* three-up with a centred short last row, rather than a grid that hangs left */
   .orbitList {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    --per-row: 3;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 26px 12px;
     width: min(560px, calc(100% - 32px));
     margin-inline: auto;
@@ -1365,7 +1396,8 @@
 
   .orbitItem {
     position: static;
-    width: auto;
+    flex: 0 0 calc((100% - (var(--per-row) - 1) * 12px) / var(--per-row));
+    min-width: 0;
     height: auto;
     transform: none;
   }
@@ -1388,7 +1420,7 @@
   }
 
   .cell[data-featured],
-  .cell:last-child {
+  .cell:nth-child(even):last-child {
     grid-column: auto;
     grid-row: auto;
   }
@@ -1422,7 +1454,7 @@
 
 @media (max-width: 420px) {
   .orbitList {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    --per-row: 2;
   }
 }
 

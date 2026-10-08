@@ -63,7 +63,7 @@ export function ConsultationSection() {
           </h2>
           <p className={styles.lead}>
             Tell us what you&apos;re planning and we&apos;ll map out exactly what&apos;s needed —
-            trade, technology, engineering, people or compliance — before any work begins.
+            trade, technology, engineering, people or operations — before any work begins.
           </p>
 
           <ul className={styles.assurances}>

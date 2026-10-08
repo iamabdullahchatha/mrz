@@ -35,7 +35,7 @@ const STEPS = [
   },
   {
     title: "We map what's needed",
-    text: "We work out which parts of MRZ apply — trade, technology, engineering, people or compliance — and who should lead.",
+    text: "We work out which parts of MRZ apply — trade, technology, engineering, people or operations — and who should lead.",
   },
   {
     title: "We come back with a plan",
@@ -214,7 +214,7 @@ export function ContactContent() {
             </motion.h1>
 
             <motion.p className={kit.lead} variants={v(riseVariants)}>
-              Tell us what you&apos;re planning — trade, technology, engineering, people or compliance — and we&apos;ll
+              Tell us what you&apos;re planning — trade, technology, engineering, people or operations — and we&apos;ll
               point it to the right part of the team. Our office is on {address.street} in {address.city}, and we work
               with businesses across the UAE.
             </motion.p>

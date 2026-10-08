@@ -16,7 +16,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const FAQS = [
   {
     q: "What services does MRZ provide?",
-    a: "Nine specialist services under one team: commercial brokerage, general trading, IT consultancy, cyber security architecture, management services, petroleum & gas engineering consultancy, HR consultancy, HR provision and UAE documents clearing.",
+    a: "Ten specialist services under one team: commercial brokerage, general trading, IT consultancy, cyber security architecture, management services, petroleum & gas engineering consultancy, HR consultancy, HR provision, manpower & workforce solutions and HR compliance & risk management.",
   },
   {
     q: "Where is MRZ based, and which areas do you serve?",
@@ -24,7 +24,7 @@ const FAQS = [
   },
   {
     q: "Can you handle several services together, or just one at a time?",
-    a: "Both. You get a single accountable team and one point of contact, so trade, technology, engineering, people and compliance work can run end to end together instead of across separate providers.",
+    a: "Both. You get a single accountable team and one point of contact, so trade, technology, engineering, people and operations work can run end to end together instead of across separate providers.",
   },
   {
     q: "How does MRZ keep UAE approvals and paperwork on track?",

@@ -65,11 +65,11 @@ function Plus() {
 const FAQS = [
   {
     q: "How many services does MRZ offer, and what are they?",
-    a: "Nine specialist services under one team: commercial brokerage, general trading, IT consultancy, cyber security architecture, management services, petroleum & gas engineering consultancy, HR consultancy, HR provision and UAE documents clearing.",
+    a: "Ten specialist services under one team: commercial brokerage, general trading, IT consultancy, cyber security architecture, management services, petroleum & gas engineering consultancy, HR consultancy, HR provision, manpower & workforce solutions and HR compliance & risk management.",
   },
   {
     q: "Can I combine several services, or do I have to choose one?",
-    a: "You can combine as many as you need. One accountable team and a single point of contact means trade, technology, engineering, people and compliance work can run end to end together, instead of across separate providers.",
+    a: "You can combine as many as you need. One accountable team and a single point of contact means trade, technology, engineering, people and operations work can run end to end together, instead of across separate providers.",
   },
   {
     q: "Where is MRZ based, and which areas do you cover?",
@@ -184,7 +184,7 @@ export function ServicesIndex() {
             </motion.h1>
 
             <motion.p className={styles.lead} variants={reduce ? undefined : riseVariants}>
-              Trade, technology, engineering, people and compliance — delivered by one coordinated UAE team,
+              Trade, technology, engineering, people and operations — delivered by one coordinated UAE team,
               documentation-led from the first conversation to completion.
             </motion.p>
 

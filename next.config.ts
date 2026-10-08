@@ -11,8 +11,11 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // Accounting & Bookkeeping is no longer offered — send old links to the services index.
+      // Services that are no longer offered — send old links to the services index.
       { source: "/services/accounting-bookkeeping", destination: "/services", permanent: true },
+      { source: "/services/documents-clearing", destination: "/services", permanent: true },
+      // The Documentation & Compliance sector was built around documents clearing — send it to the industries index.
+      { source: "/industries/documentation-compliance", destination: "/industries", permanent: true },
     ];
   },
 };

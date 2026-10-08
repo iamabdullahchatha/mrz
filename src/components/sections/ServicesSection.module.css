@@ -141,6 +141,26 @@
   perspective: 1100px;
 }
 
+/* three-up on a six-track grid, so a short last row (one or two cards) sits
+   centred instead of hanging off the left edge */
+@media (min-width: 961px) {
+  .grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .cell {
+    grid-column: span 2;
+  }
+
+  .cell:nth-child(3n + 1):nth-last-child(2) {
+    grid-column: 2 / span 2;
+  }
+
+  .cell:nth-child(3n + 1):last-child {
+    grid-column: 3 / span 2;
+  }
+}
+
 /* ---------------------------------------------------------- glass card */
 
 .card {

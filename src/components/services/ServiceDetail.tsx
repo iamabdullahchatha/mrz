@@ -47,7 +47,7 @@ const WHY_MRZ: { icon: ReactNode; title: string; text: string }[] = [
   {
     icon: <MenuIcon name="people" width={22} height={22} />,
     title: "One accountable team",
-    text: "Trade, technology, engineering, people and compliance handled under a single team.",
+    text: "Trade, technology, engineering, people and operations handled under a single team.",
   },
   {
     icon: <MenuIcon name="doc" width={22} height={22} />,
@@ -438,7 +438,7 @@ export function ServiceDetail({ service, detail }: ServiceDetailProps) {
             <SectionHead
               id="why-title"
               kicker="Why MRZ"
-              lead="Trade, technology, engineering, people and compliance — coordinated from our Ajman office for businesses across the Emirates."
+              lead="Trade, technology, engineering, people and operations — coordinated from our Ajman office for businesses across the Emirates."
               start
               reduce={reduce}
             >

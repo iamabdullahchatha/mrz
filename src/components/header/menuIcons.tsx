@@ -133,6 +133,40 @@ const office = (p: IconProps) => (
   </Svg>
 );
 
+const briefcase = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="3" y="7" width="18" height="13" rx="2" />
+    <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+    <path d="M3 12h18M11 12h2" />
+  </Svg>
+);
+
+const scale = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 5v14M8 19h8M5 6h14" />
+    <path d="M5 6 3 10.5h4z" />
+    <path d="M19 6 17 10.5h4z" />
+  </Svg>
+);
+
+const landmark = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="m12 3 8 4.5H4z" />
+    <path d="M4 8h16" />
+    <path d="M6 8v9M10 8v9M14 8v9M18 8v9" />
+    <path d="M4 17h16M3 20.5h18" />
+  </Svg>
+);
+
+const truck = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M3 6h11v9H3z" />
+    <path d="M14 9h4l3 3v3h-7z" />
+    <circle cx="7" cy="18" r="1.6" />
+    <circle cx="17.5" cy="18" r="1.6" />
+  </Svg>
+);
+
 const MENU_ICONS: Record<string, (p: IconProps) => React.JSX.Element> = {
   exchange,
   box,
@@ -148,6 +182,10 @@ const MENU_ICONS: Record<string, (p: IconProps) => React.JSX.Element> = {
   flame,
   chip,
   office,
+  briefcase,
+  scale,
+  landmark,
+  truck,
 };
 
 /** Resolves a data `icon` key to its glyph, falling back to a neutral box. */

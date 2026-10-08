@@ -51,8 +51,11 @@ function Check() {
   );
 }
 
-/* Where each sector sits on the hero's horizon arc (degrees from its apex). */
-const ORBIT_ANGLES = [-22, -13.2, -4.4, 4.4, 13.2, 22];
+/* Where each sector sits on the hero's horizon arc (degrees from its apex):
+   spread evenly across ±22°, however many sectors there are. */
+const ORBIT_SPREAD = 22;
+const ORBIT_MID = (industries.length - 1) / 2;
+const ORBIT_ANGLES = industries.map((_, i) => (ORBIT_MID ? ((i - ORBIT_MID) / ORBIT_MID) * ORBIT_SPREAD : 0));
 
 const SERVICE_BY_ID = new Map(services.map((s) => [s.id, s]));
 
@@ -144,7 +147,7 @@ export function IndustriesIndex() {
           </motion.h1>
 
           <motion.p className={styles.lead} variants={reduce ? undefined : riseVariants}>
-            From trade and construction to energy, technology and compliance — specialist support tuned to the
+            From trade and construction to energy, technology and SMEs — specialist support tuned to the
             realities of each sector, delivered by one accountable team.
           </motion.p>
 
@@ -192,7 +195,7 @@ export function IndustriesIndex() {
                     className={styles.orbitNodeWrap}
                     initial={reduce ? false : { opacity: 0, y: 24, scale: 0.8 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.8, ease: EASE, delay: 0.45 + Math.abs(i - 2.5) * 0.09 }}
+                    transition={{ duration: 0.8, ease: EASE, delay: 0.45 + Math.abs(i - ORBIT_MID) * 0.09 }}
                   >
                     <Link href={ind.href} className={styles.orbitNode}>
                       <span className={styles.orbitIcon}>
@@ -255,7 +258,7 @@ export function IndustriesIndex() {
                       sizes={
                         featured
                           ? "(max-width: 640px) 92vw, (max-width: 960px) 92vw, 820px"
-                          : "(max-width: 640px) 92vw, (max-width: 960px) 46vw, 400px"
+                          : "(max-width: 640px) 92vw, (max-width: 960px) 46vw, 620px"
                       }
                       quality={85}
                       preload={featured}

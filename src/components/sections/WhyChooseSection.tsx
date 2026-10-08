@@ -16,7 +16,7 @@ const REASONS = [
   {
     icon: "layers",
     title: "Many services, one team",
-    text: "Trade, technology, engineering, people and compliance — run end to end together.",
+    text: "Trade, technology, engineering, people and operations — run end to end together.",
   },
   {
     icon: "person",

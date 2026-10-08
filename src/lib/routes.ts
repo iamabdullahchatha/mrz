@@ -23,7 +23,8 @@ export const ROUTES = {
     petroleumGasEngineering: "/services/petroleum-gas-engineering-consultancy",
     hrConsultancy: "/services/hr-consultancy",
     hrProvision: "/services/hr-provision",
-    documentsClearing: "/services/documents-clearing",
+    manpowerWorkforceSolutions: "/services/manpower-workforce-solutions",
+    hrComplianceRiskManagement: "/services/hr-compliance-risk-management",
   },
 } as const;
 

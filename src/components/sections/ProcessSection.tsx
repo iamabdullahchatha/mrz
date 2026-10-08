@@ -24,7 +24,7 @@ const STEPS = [
     no: "03",
     icon: "exchange",
     title: "Delivery",
-    text: "One coordinated team runs trade, technology, people and paperwork in step.",
+    text: "One coordinated team runs trade, technology, people and operations in step.",
   },
   {
     no: "04",

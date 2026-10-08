@@ -602,7 +602,7 @@ export function IndustryDetail({ industry, detail }: IndustryDetailProps) {
                       alt=""
                       fill
                       className={styles.posterImg}
-                      sizes="(max-width: 620px) 70vw, (max-width: 1100px) 34vw, 240px"
+                      sizes="(max-width: 620px) 70vw, (max-width: 1100px) 34vw, 300px"
                     />
                   </span>
                   <span className={styles.posterShade} aria-hidden="true" />

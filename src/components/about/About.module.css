@@ -282,16 +282,31 @@
 .discGrid,
 .valuesGrid,
 .indGrid {
-  display: grid;
-  gap: clamp(16px, 1.8vw, 24px);
+  --gap: clamp(16px, 1.8vw, 24px);
+  gap: var(--gap);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.valuesGrid {
+  display: grid;
+}
+
+/* rows of three that wrap and centre, so a short last row sits in the middle
+   instead of leaving an empty slot */
 .discGrid,
 .indGrid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  --cols: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.discGrid > li,
+.indGrid > li {
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  min-width: 0;
 }
 
 /* ------------------------------------------------------- disciplines */
@@ -542,7 +557,7 @@
 
   .discGrid,
   .indGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    --cols: 2;
   }
 }
 
@@ -614,7 +629,10 @@
   }
 
   .discGrid,
-  .indGrid,
+  .indGrid {
+    --cols: 1;
+  }
+
   .valuesGrid {
     grid-template-columns: minmax(0, 1fr);
   }

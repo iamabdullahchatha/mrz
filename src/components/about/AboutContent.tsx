@@ -38,9 +38,8 @@ const STORY_POINTS = [
 const CATEGORY_META: Record<string, { icon: string; tagline: string }> = {
   Trade: { icon: "exchange", tagline: "Brokerage, sourcing and import/export, coordinated end to end." },
   Technology: { icon: "chip", tagline: "IT consultancy and security-first cyber architecture." },
-  People: { icon: "people", tagline: "HR consultancy and dependable workforce provision." },
+  People: { icon: "people", tagline: "HR consultancy, workforce solutions and compliance support." },
   Corporate: { icon: "office", tagline: "Management services that keep operations moving." },
-  Compliance: { icon: "doc", tagline: "Documents clearing and regulatory paperwork, handled." },
   Engineering: { icon: "flame", tagline: "Petroleum and gas engineering consultancy." },
 };
 
@@ -77,7 +76,7 @@ const PROCESS = [
   },
   {
     title: "Coordinate one team",
-    text: "Every workstream — trade, technology, engineering, people and compliance — is run by one coordinated team, not a chain of vendors.",
+    text: "Every workstream — trade, technology, engineering, people and operations — is run by one coordinated team, not a chain of vendors.",
   },
   {
     title: "Deliver and keep supporting",
@@ -90,7 +89,7 @@ const VALUES = [
     icon: "layers",
     accent: "gold",
     title: "Everything under one roof",
-    text: "Trade, technology, engineering, people and compliance — coordinated by a single team instead of a dozen disconnected vendors.",
+    text: "Trade, technology, engineering, people and operations — coordinated by a single team instead of a dozen disconnected vendors.",
   },
   {
     icon: "person",
@@ -199,7 +198,7 @@ function SectionHead({
 /**
  * About MRZ, in the same visual language as the Services and Industries index
  * pages. A split hero pairs the headline and count-up stats with a layered
- * photo collage; then the story, the six disciplines (cursor-spotlit glass
+ * photo collage; then the story, the core disciplines (cursor-spotlit glass
  * cards linking every service), the values, a self-drawing engagement rail,
  * the industries served and a closing CTA. Every figure, link, discipline and
  * industry is derived from the vetted data and routes.ts — nothing is invented.
@@ -254,8 +253,8 @@ export function AboutContent() {
 
             <motion.p className={kit.lead} variants={reduce ? undefined : riseVariants}>
               MRZ Management Services FZE LLC brings commercial brokerage, trading, IT &amp; cyber security,
-              engineering, HR and documents clearing together under one roof — coordinated end to end from our Ajman
-              office, so you work with one accountable team instead of nine.
+              engineering and HR together under one roof — coordinated end to end from our Ajman office, so you work
+              with one accountable team instead of ten.
             </motion.p>
 
             <motion.div className={kit.heroActions} variants={reduce ? undefined : riseVariants}>
@@ -396,9 +395,9 @@ export function AboutContent() {
               A single team for the <span className={kit.titleAccent}>whole of your business</span>
             </motion.h2>
             <motion.p className={styles.storyLead} variants={reduce ? undefined : riseVariants}>
-              MRZ was built on a simple idea: a business shouldn&apos;t need nine different vendors to move forward.
-              From our Ajman office, we bring commercial brokerage, trading, IT and cyber security, engineering, HR
-              and documents clearing together under one roof.
+              MRZ was built on a simple idea: a business shouldn&apos;t need ten different vendors to move forward.
+              From our Ajman office, we bring commercial brokerage, trading, IT and cyber security, engineering and HR
+              together under one roof.
             </motion.p>
             <motion.p className={styles.storyLead} variants={reduce ? undefined : riseVariants}>
               The result is one accountable team that plans, coordinates and delivers every workstream together — so

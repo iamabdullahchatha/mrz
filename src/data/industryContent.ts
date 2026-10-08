@@ -24,15 +24,15 @@ export const industryDetails: Record<string, IndustryContent> = {
     tagline: "Brokerage, supplier coordination and clean paperwork for trading businesses.",
     overview: [
       "Trading moves fast, and every introduction, contract and shipment needs its paperwork in order. MRZ supports trading companies across general trade and commercial brokerage, coordinating suppliers and buyers while keeping documentation ready at each stage.",
-      "From operational setup to ongoing documents clearing, one accountable team keeps your trading activity organised, compliant and easy to follow.",
+      "From operational setup to structured execution, one accountable team keeps your trading activity organised, compliant and easy to follow.",
     ],
     challenges: [
       { title: "Sourcing and introductions", text: "Finding the right buyers and suppliers, and managing the conversations around them." },
       { title: "Documentation under pressure", text: "Contracts, invoices and trade paperwork that must be right before they are needed." },
-      { title: "Approvals and clearance", text: "Requirement checklists and follow-ups that stop UAE paperwork from holding up a shipment." },
+      { title: "Compliance guidance", text: "Practical guidance that keeps trading operations aligned with UAE requirements." },
     ],
     outcomes: ["Relevant introductions, not cold leads", "Paperwork ready before it is required", "Organised records at every milestone", "One point of contact across trade and paperwork"],
-    serviceIds: ["commercial-brokers", "general-trading", "documents-clearing-services"],
+    serviceIds: ["commercial-brokers", "general-trading"],
     faqs: [
       { q: "Can you support both brokerage and general trading?", a: "Yes. Commercial brokerage and general trading are both delivered by the same accountable team, so introductions, supplier coordination and paperwork stay joined up." },
       { q: "How do you keep trade paperwork from slowing deals?", a: "Documentation is prepared and checked before it is needed, and every open item has a defined owner and next step, so deals keep moving." },
@@ -44,18 +44,18 @@ export const industryDetails: Record<string, IndustryContent> = {
     tagline: "Engineering consultancy, compliance and documentation that keep projects moving.",
     overview: [
       "Construction and engineering projects depend on the right requirements, the right approvals and the right paperwork at the right time. MRZ provides engineering consultancy support and documentation-led coordination so each stage has a clear path forward.",
-      "We work with one accountable team across technical consultancy, documents clearing and management support, so project delays are caught early and follow-up never falls between providers.",
+      "We work with one accountable team across technical consultancy and management support, so project delays are caught early and follow-up never falls between providers.",
     ],
     challenges: [
       { title: "Technical requirements", text: "Clarifying project requirements up front so everyone works from the same brief." },
-      { title: "Approvals and documents", text: "Checklists and follow-ups that stop UAE paperwork from holding up a project." },
+      { title: "Documentation readiness", text: "Project paperwork prepared and kept in order so each stage can move forward." },
       { title: "Coordinated progress", text: "Stages and stakeholders kept in step against a clear plan." },
     ],
-    outcomes: ["Requirements everyone agrees on", "Audit-ready documentation", "Fewer approval delays", "Milestones kept on track"],
-    serviceIds: ["petroleum-gas-engineering", "documents-clearing-services", "management-services"],
+    outcomes: ["Requirements everyone agrees on", "Audit-ready documentation", "Fewer dropped handovers", "Milestones kept on track"],
+    serviceIds: ["petroleum-gas-engineering", "management-services", "manpower-workforce-solutions"],
     faqs: [
       { q: "Do you provide engineering consultancy for construction projects?", a: "We provide engineering consultancy support — aligning requirements, preparing project documentation and coordinating the structured steps a project needs to progress." },
-      { q: "How do you help with UAE approvals on a project?", a: "Our documents clearing service builds requirement checklists, follows up each step and coordinates submissions so approvals are not left to stall." },
+      { q: "How do you keep a project's stages coordinated?", a: "Everyone knows the plan, the owner and the next step. Open items are followed up to resolution and decisions are recorded, so handovers don't get dropped and milestones stay on track." },
       { q: "How do we begin?", a: "Book a free consultation. We clarify the scope and set out a clear, documentation-led plan before any work begins." },
     ],
   },
@@ -72,7 +72,7 @@ export const industryDetails: Record<string, IndustryContent> = {
       { title: "Multi-stakeholder projects", text: "Stages and parties coordinated to one clear plan." },
     ],
     outcomes: ["Requirements agreed before work starts", "Audit-ready documentation", "Coordinated, orderly progress", "Milestones kept on track"],
-    serviceIds: ["petroleum-gas-engineering", "documents-clearing-services", "management-services"],
+    serviceIds: ["petroleum-gas-engineering", "management-services"],
     faqs: [
       { q: "What industrial projects do you support?", a: "Petroleum and gas engineering consultancy, including gas tank and piping projects, with requirements aligned and project documentation prepared and coordinated." },
       { q: "How do you keep projects audit-ready?", a: "Requirements are clarified up front and paperwork is maintained as the project moves, so records stay complete and organised." },
@@ -103,40 +103,60 @@ export const industryDetails: Record<string, IndustryContent> = {
   "corporate-smes": {
     tagline: "Practical back-office support for SMEs and growing organisations across the UAE.",
     overview: [
-      "Growing businesses need dependable back-office support without the overhead of building every function in-house. MRZ supports SMEs and established organisations with management services, people operations and documents clearing, all coordinated by one team.",
-      "We keep operations coordinated, HR compliant and paperwork moving, so leadership can focus on growth while the essentials run predictably.",
+      "Growing businesses need dependable back-office support without the overhead of building every function in-house. MRZ supports SMEs and established organisations with management services and people operations, all coordinated by one team.",
+      "We keep operations coordinated and HR compliant, so leadership can focus on growth while the essentials run predictably.",
     ],
     challenges: [
-      { title: "Approvals and paperwork", text: "Requirement checklists and follow-ups that keep UAE documents moving without delays." },
       { title: "Operational coordination", text: "Plans, owners and follow-ups that keep teams pulling in the same direction." },
       { title: "People compliance", text: "HR practices and records that are consistent, fair and compliant." },
+      { title: "Day-to-day HR capacity", text: "Hands-on provision with task follow-ups, so routine HR work keeps moving." },
     ],
-    outcomes: ["Fewer avoidable approval delays", "Teams pulling in the same direction", "Compliant, consistent HR practices", "One point of contact for the back office"],
-    serviceIds: ["management-services", "human-resources-consultancy", "other-human-resources-provision", "documents-clearing-services"],
+    outcomes: ["Teams pulling in the same direction", "Compliant, consistent HR practices", "Extra HR capacity when you need it", "One point of contact for the back office"],
+    serviceIds: ["management-services", "human-resources-consultancy", "other-human-resources-provision"],
     faqs: [
       { q: "Do you support smaller businesses as well as larger organisations?", a: "Yes. We work with SMEs and growing organisations across the UAE, scaling our support to match what the business needs." },
-      { q: "Can operations, HR and paperwork be handled by one provider?", a: "Yes. Management services, HR and documents clearing are coordinated by one accountable team with a single point of contact." },
+      { q: "Can operations and HR be handled by one provider?", a: "Yes. Management services, HR consultancy and HR provision are coordinated by one accountable team with a single point of contact." },
       { q: "How do we get started?", a: "Book a free consultation. We review your current back-office setup and give you a clear, documentation-led plan before any work begins." },
     ],
   },
 
-  "documentation-compliance": {
-    tagline: "Checklists, follow-ups and regulatory support that cut approval delays.",
+  "government-public-sector": {
+    tagline: "Structured coordination, careful records and compliant people support for public-sector work.",
     overview: [
-      "Regulatory paperwork is where many businesses lose the most time. MRZ supports UAE documents clearing and compliance across Ajman and the wider UAE, building clear requirement checklists and following each step through to approval.",
-      "Our documentation-led approach means you know exactly what is needed and who is doing what next, with HR and people compliance covered by the same team.",
+      "Public-sector work runs on clear requirements, careful records and accountable follow-up. MRZ supports public-sector bodies and the organisations that deliver for them with documentation-led coordination, management support and compliance-focused HR.",
+      "One accountable team keeps each stage organised and traceable, so approvals, handovers and reporting always have the paperwork behind them.",
     ],
     challenges: [
-      { title: "Unclear requirements", text: "Checklists that lay out exactly what is needed before you start." },
-      { title: "Stalled approvals", text: "Follow-ups that chase each step so submissions do not sit idle." },
-      { title: "People compliance", text: "HR records and processes kept aligned with UAE requirements." },
+      { title: "Documentation and traceability", text: "Records prepared, organised and kept current so every stage can be reviewed." },
+      { title: "Structured coordination", text: "Plans, owners and follow-ups that keep multi-party work moving in step." },
+      { title: "Workforce compliance", text: "HR practices, contracts and records aligned with UAE requirements." },
     ],
-    outcomes: ["Fewer avoidable delays", "A clear path to approval", "Records ready when needed", "Better approval outcomes"],
-    serviceIds: ["documents-clearing-services", "human-resources-consultancy"],
+    outcomes: ["Records that stand up to review", "Clear owners and next steps", "Compliant, consistent HR practices", "One point of contact across the engagement"],
+    serviceIds: ["management-services", "hr-compliance-risk-management", "manpower-workforce-solutions"],
     faqs: [
-      { q: "What does documents clearing involve?", a: "Requirements checklists, step-by-step follow-ups and end-to-end coordination, so the whole process runs from one place." },
-      { q: "Do you cover HR compliance too?", a: "Yes. HR consultancy covers compliance-led processes and documentation readiness, so people records stay consistent and prepared." },
-      { q: "How do we begin?", a: "Book a free consultation. We outline the documents and steps involved and give you a clear, documentation-led plan before any work begins." },
+      { q: "How does MRZ support public-sector work?", a: "Through documentation-led coordination, management support and compliance-focused HR — keeping requirements clear, records organised and follow-up accountable at each stage." },
+      { q: "Do you also support contractors and suppliers to the public sector?", a: "Yes. Organisations delivering public-sector work face the same documentation and compliance demands, and we support them with the same structured, documentation-led approach." },
+      { q: "How do we get started?", a: "Book a free consultation. We review your requirements and give you a clear, documentation-led plan before any work begins." },
+    ],
+  },
+
+  "logistics-transportation": {
+    tagline: "Coordination, documentation and workforce support that keep goods moving.",
+    overview: [
+      "Logistics depends on every handover going right — suppliers, shipments, paperwork and people all have to line up. MRZ supports logistics and transportation businesses with trade coordination, documentation readiness and operational follow-up.",
+      "With management support and workforce solutions from the same team, operations stay organised as volumes grow and schedules tighten.",
+    ],
+    challenges: [
+      { title: "Shipment documentation", text: "Trade paperwork prepared, checked and kept current for each movement." },
+      { title: "Operational handovers", text: "Clear stages, owners and follow-up so nothing stalls between parties." },
+      { title: "Workforce capacity", text: "Planning and onboarding support for the teams that keep operations running." },
+    ],
+    outcomes: ["Paperwork ready before it is required", "Fewer delays at each handover", "Teams sized to the workload", "A predictable, repeatable process"],
+    serviceIds: ["general-trading", "management-services", "manpower-workforce-solutions"],
+    faqs: [
+      { q: "What does MRZ do for logistics and transportation businesses?", a: "We support the work around your operations — supplier coordination, trade documentation, operational follow-up and workforce planning — so shipments and teams stay organised." },
+      { q: "Can you help when we need more people on the ground?", a: "Yes. Our manpower and workforce solutions cover staffing needs planning, sourcing coordination and onboarding documentation, alongside the operational support." },
+      { q: "How do we get started?", a: "Book a free consultation. We review how your operations run today and give you a clear, documentation-led plan before any work begins." },
     ],
   },
 };

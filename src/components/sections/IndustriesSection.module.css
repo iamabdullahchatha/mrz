@@ -128,9 +128,10 @@
 
 .grid {
   display: grid;
-  /* Bento: a wide card opens and closes the grid, with two portrait-ish cards
-     either side — 2 + 1 + 1 / 1 + 1 + 2 across four columns. */
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* Bento on six tracks: rows of three portrait-ish posters. A closing pair
+     spreads across the full width (3 / 2 for five); a lone closing card sits
+     centred at poster width so its photo keeps the same crop as the rest. */
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   grid-auto-rows: clamp(320px, 27vw, 380px);
   gap: clamp(16px, 1.8vw, 24px);
   margin: 0;
@@ -148,9 +149,19 @@
   will-change: transform, opacity;
 }
 
-.cell:nth-child(6n + 1),
-.cell:nth-child(6n) {
-  grid-column: span 2;
+@media (min-width: 1025px) {
+  .cell {
+    grid-column: span 2;
+  }
+
+  .cell:nth-child(3n + 1):nth-last-child(2),
+  .cell:nth-child(3n + 1):nth-last-child(2) + .cell {
+    grid-column: span 3;
+  }
+
+  .cell:nth-child(3n + 1):last-child {
+    grid-column: 3 / span 2;
+  }
 }
 
 /* -------------------------------------------------------- poster card */
@@ -458,9 +469,9 @@
     grid-auto-rows: clamp(280px, 40vw, 360px);
   }
 
-  .cell:nth-child(6n + 1),
-  .cell:nth-child(6n) {
-    grid-column: auto;
+  /* an unpaired last card takes the full width instead of leaving a gap */
+  .cell:nth-child(odd):last-child {
+    grid-column: 1 / -1;
   }
 }
 

@@ -181,23 +181,43 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     ],
   },
 
-  "documents-clearing-services": {
-    tagline: "Checklists and follow-ups that cut approval delays.",
+  "manpower-workforce-solutions": {
+    tagline: "Plan, source and onboard the workforce your operations need.",
     overview: [
-      "We support UAE documents clearing end to end — building requirements checklists, following up and coordinating each step to reduce delays and improve approval outcomes.",
-      "Knowing exactly what is needed, and who is doing what next, is what keeps approvals moving.",
+      "We help UAE businesses build and scale their workforce — clarifying staffing needs, coordinating candidate sourcing and keeping onboarding documentation ready so new team members can start without avoidable delays.",
+      "Whether you are staffing a new project or adding capacity to an existing team, one accountable team keeps the process organised from first requirement to first day.",
     ],
     included: [
-      { title: "Requirements checklists", text: "Exactly what is needed, laid out clearly before you start." },
-      { title: "Follow-ups", text: "Each step chased so approvals do not stall." },
-      { title: "End-to-end coordination", text: "The whole process coordinated from one place." },
-      { title: "Outcome focus", text: "Organised submissions that improve approval outcomes." },
+      { title: "Workforce planning", text: "Roles, numbers and timing mapped against what your operations actually need." },
+      { title: "Sourcing coordination", text: "Candidate sourcing and shortlisting managed to your requirements." },
+      { title: "Onboarding documentation", text: "Contracts and joining paperwork prepared and checked before day one." },
+      { title: "Deployment follow-up", text: "Open items tracked so new starters are placed and settled." },
     ],
-    outcomes: ["Fewer avoidable delays", "A clear path to approval", "One coordinated process", "Better approval outcomes"],
+    outcomes: ["Staffing plans tied to real demand", "Shortlists that fit the role", "Paperwork ready before start dates", "One point of contact as teams scale"],
     faqs: [
-      { q: "What does documents clearing support include?", a: "Requirements checklists, step-by-step follow-ups and end-to-end coordination — so you know exactly what's needed and who's doing what next, from one place." },
-      { q: "How do you reduce approval delays?", a: "By laying out exactly what's required before you start and chasing each step, submissions stay organised and avoidable delays are cut down." },
-      { q: "How do we get started?", a: "Book a free consultation. We outline the documents and steps involved and give you a clear, documentation-led plan before any work begins." },
+      { q: "What does manpower and workforce support include?", a: "Workforce planning, candidate sourcing coordination, onboarding documentation and follow-up — one accountable team from the first staffing requirement to a new starter's first day." },
+      { q: "How is this different from HR provision?", a: "Workforce solutions focus on building and scaling teams — planning, sourcing and onboarding. HR provision is ongoing capacity for day-to-day HR execution once people are in place." },
+      { q: "How do we get started?", a: "Book a free consultation. We review the roles and capacity you need and give you a clear, documentation-led plan before any work begins." },
+    ],
+  },
+
+  "hr-compliance-risk-management": {
+    tagline: "Reviews, records and practical steps that keep HR compliant.",
+    overview: [
+      "We help UAE businesses keep HR practices compliant and reduce people-related risk — reviewing policies, contracts and employee records against UAE requirements and setting out practical steps to close the gaps.",
+      "Clear, consistent HR records protect the business, support fair treatment of employees and make reviews easier to prepare for.",
+    ],
+    included: [
+      { title: "Compliance review", text: "HR policies and practices assessed against UAE requirements." },
+      { title: "Contract and record checks", text: "Employment contracts and employee files reviewed for completeness and consistency." },
+      { title: "Risk identification", text: "People-related risks surfaced and prioritised by impact." },
+      { title: "Remediation plan", text: "Practical, documented steps to close gaps and keep records current." },
+    ],
+    outcomes: ["A clear view of HR compliance gaps", "Complete, consistent employee records", "Fewer people-related risks", "Reviews you can prepare for calmly"],
+    faqs: [
+      { q: "What does an HR compliance review cover?", a: "HR policies, employment contracts and employee records, assessed against UAE requirements, with people-related risks identified and prioritised." },
+      { q: "Do you only point out gaps, or help close them?", a: "Both. You get a practical, documented plan to close the gaps, and support keeping records current afterwards." },
+      { q: "How do we get started?", a: "Book a free consultation. We review your current HR setup and give you a clear, documentation-led plan before any work begins." },
     ],
   },
 };

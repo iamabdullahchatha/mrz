@@ -29,7 +29,8 @@ const CARD_ALT: Record<string, string> = {
   "petroleum-gas-engineering": "An offshore oil and gas platform silhouetted against a sunset sky",
   "human-resources-consultancy": "Two HR professionals in conversation at a bright office table",
   "other-human-resources-provision": "A team working together on laptops in a bright collaborative workspace",
-  "documents-clearing-services": "A professional signing official documents with a colleague assisting",
+  "manpower-workforce-solutions": "A diverse team gathered around a long wooden table with laptops in a warm, open workspace",
+  "hr-compliance-risk-management": "A professional completing a form at a white desk while a colleague looks on",
 };
 
 /**
@@ -57,7 +58,7 @@ export function ServicesSection() {
             </h2>
           </div>
           <p className={styles.lead}>
-            Nine specialist services — trade, technology, engineering, people and compliance —
+            Ten specialist services — trade, technology, engineering, people and operations —
             delivered by one coordinated UAE team.
           </p>
         </header>

@@ -73,13 +73,13 @@ export function IndustriesSection() {
             </h2>
           </div>
           <p className={styles.lead}>
-            From trade and construction to energy, technology and compliance — specialist support
+            From trade and construction to energy, technology and SMEs — specialist support
             tuned to the realities of each sector across the UAE.
           </p>
         </header>
 
         <ul className={styles.grid}>
-          {industries.map((ind) => (
+          {industries.map((ind, i) => (
             <motion.li
               key={ind.id}
               className={styles.cell}
@@ -98,7 +98,12 @@ export function IndustriesSection() {
                     alt={ind.imageAlt}
                     fill
                     className={styles.img}
-                    sizes="(max-width: 720px) 92vw, (max-width: 1240px) 46vw, 600px"
+                    sizes={
+                      // an unpaired last card runs full width on tablets
+                      i === industries.length - 1 && i % 2 === 0
+                        ? "(max-width: 1024px) 92vw, 600px"
+                        : "(max-width: 720px) 92vw, (max-width: 1240px) 46vw, 600px"
+                    }
                     quality={85}
                   />
                   <span className={styles.shade} aria-hidden="true" />
