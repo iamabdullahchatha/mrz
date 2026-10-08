@@ -46,6 +46,28 @@ function IconStart({ size = 22 }: GlyphProps) {
   );
 }
 
+function IconServices({ size = 22 }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="3" width="8" height="8" rx="1.5" />
+      <rect x="13" y="3" width="8" height="8" rx="1.5" />
+      <rect x="3" y="13" width="8" height="8" rx="1.5" />
+      <rect x="13" y="13" width="8" height="8" rx="1.5" />
+    </svg>
+  );
+}
+
+function IconIndustries({ size = 22 }: GlyphProps) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3 21h18" />
+      <path d="M4 21V10l5-3v14" />
+      <path d="M14 21V6l6-2v17" />
+      <path d="M9 13h.01M9 17h.01M18 9h.01M18 13h.01M18 17h.01" />
+    </svg>
+  );
+}
+
 function IconHelp({ size = 22 }: GlyphProps) {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -58,6 +80,8 @@ function IconHelp({ size = 22 }: GlyphProps) {
 
 const GROUP_ICONS: Record<string, (p: GlyphProps) => ReactNode> = {
   about: IconAbout,
+  services: IconServices,
+  industries: IconIndustries,
   working: IconWorking,
   starting: IconStart,
 };
@@ -84,6 +108,52 @@ const CATEGORIES = [
       },
     ],
   },
+  {
+    id: "services",
+    label: "Our services",
+    items: [
+      {
+        q: "Which services does MRZ cover?",
+        a: "Trade (commercial brokerage, general trading), technology (IT consultancy, cyber security architecture), corporate management services, petroleum & gas engineering consultancy, and people services — HR consultancy, HR provision, manpower & workforce solutions and HR compliance & risk management.",
+      },
+      {
+        q: "What's the difference between HR consultancy, HR provision, manpower solutions and HR compliance?",
+        a: "HR consultancy gives people-operations and compliance-led guidance. HR provision is hands-on, day-to-day HR execution. Manpower & workforce solutions plans, sources and onboards the workforce you need. HR compliance & risk management reviews your HR records and practices against UAE requirements. All four can be delivered together by one team.",
+      },
+      {
+        q: "Can I combine several services, like cyber security with IT consultancy?",
+        a: "Yes. Services are delivered by one accountable team, so combinations like cyber security architecture with IT consultancy, or engineering consultancy with manpower support, run under a single point of contact instead of separate providers.",
+      },
+      {
+        q: "Where can I see full details for a specific service?",
+        a: "Every service has its own page with an overview, what's included, expected outcomes and FAQs — browse them all from the services page.",
+      },
+    ],
+  },
+
+  {
+    id: "industries",
+    label: "Industries we serve",
+    items: [
+      {
+        q: "Which industries does MRZ work with?",
+        a: "Trading companies, construction & engineering, oil, gas & industrial, IT & technology, corporate & SMEs, government & public sector, and logistics & transportation.",
+      },
+      {
+        q: "Do you tailor services to each industry, or offer the same package everywhere?",
+        a: "Each industry page lists the specific services most relevant to that sector — for example, manpower & workforce solutions and HR compliance for government & public-sector work, or general trading and management services for logistics — so the support matches how that sector actually operates.",
+      },
+      {
+        q: "My business doesn't fit neatly into one listed industry — can you still help?",
+        a: "Yes. The listed industries reflect where we have the clearest fit, but our services aren't restricted to them. Book a free consultation and we'll confirm whether, and how, we can support your sector.",
+      },
+      {
+        q: "Where can I see which services apply to my industry?",
+        a: "Each industry page sets out typical challenges, expected outcomes and the specific services that support it — browse them all from the industries page.",
+      },
+    ],
+  },
+
   {
     id: "working",
     label: "Working with MRZ",
