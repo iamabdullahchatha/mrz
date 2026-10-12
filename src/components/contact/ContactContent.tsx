@@ -11,6 +11,7 @@ import { TiltCard } from "@/components/sections/TiltCard";
 import { accentStyle } from "@/data/serviceContent";
 import { services } from "@/data/services";
 import { CONTACT, ROUTES, SOCIAL_LINKS } from "@/lib/routes";
+import { sendContactMessage } from "@/app/contact/actions";
 import styles from "./Contact.module.css";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -129,6 +130,7 @@ export function ContactContent() {
 
   const [form, setForm] = useState<FormState>(EMPTY);
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
 
   const update =
@@ -137,36 +139,34 @@ export function ContactContent() {
       if (error) setError("");
     };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (sending) return;
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
       setError("Please add your name, email and a short message so we can reply.");
       return;
     }
-    const interest = form.service || "General enquiry";
-    const subject = `Website enquiry — ${interest}`;
-    const body = [
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      form.phone.trim() ? `Phone: ${form.phone}` : null,
-      form.company.trim() ? `Company: ${form.company}` : null,
-      `Interest: ${interest}`,
-      "",
-      form.message,
-    ]
-      .filter((l): l is string => l !== null)
-      .join("\n");
 
-    const mailto = `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    if (typeof window !== "undefined") {
-      window.location.href = mailto;
+    setSending(true);
+    setError("");
+    try {
+      const result = await sendContactMessage(form);
+      if (result.ok) {
+        setSent(true);
+      } else {
+        setError(result.error);
+      }
+    } catch {
+      setError("Something went wrong sending your message. Please try again, or email us directly.");
+    } finally {
+      setSending(false);
     }
-    setSent(true);
   };
 
   const reset = () => {
     setForm(EMPTY);
     setSent(false);
+    setSending(false);
     setError("");
   };
 
@@ -422,10 +422,10 @@ export function ContactContent() {
                 <span className={styles.sentIcon} aria-hidden="true">
                   <Check size={28} />
                 </span>
-                <h2 className={styles.sentTitle}>Your message is on its way</h2>
+                <h2 className={styles.sentTitle}>Thank you — your message is with us</h2>
                 <p className={styles.sentText}>
-                  We&apos;ve opened your email app with the details filled in — just press send. Prefer another way?
-                  Call <a href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a> or email{" "}
+                  It&apos;s landed with the team in Ajman and we&apos;ll be in touch soon. Prefer another way? Call{" "}
+                  <a href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a> or email{" "}
                   <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> and we&apos;ll take it from there.
                 </p>
                 <button type="button" className={kit.secondary} onClick={reset}>
@@ -558,15 +558,19 @@ export function ContactContent() {
                     </p>
                   ) : null}
 
-                  <button type="submit" className={`${kit.primary} ${styles.submit}`}>
-                    Send message
+                  <button
+                    type="submit"
+                    className={`${kit.primary} ${styles.submit}`}
+                    disabled={sending}
+                    aria-busy={sending}
+                  >
+                    {sending ? "Sending…" : "Send message"}
                     <span className={kit.primaryIcon} aria-hidden="true">
                       <Arrow />
                     </span>
                   </button>
                   <p className={styles.formNote}>
-                    This opens your email app pre-filled to {CONTACT.email}. Your details are never shared with anyone
-                    else.
+                    Your message goes straight to {CONTACT.email}. Your details are never shared with anyone else.
                   </p>
                 </form>
               </>

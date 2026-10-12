@@ -643,6 +643,11 @@
   margin-top: 4px;
 }
 
+.submit:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
 .formNote {
   margin: 0;
   color: var(--text-muted);
