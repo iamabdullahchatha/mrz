@@ -40,3 +40,9 @@ export const CONTACT = {
     country: "United Arab Emirates",
   },
 } as const;
+
+export const SOCIAL_LINKS = [
+  { key: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/company/mrz-mangement-services/" },
+  { key: "facebook", label: "Facebook", href: "https://www.facebook.com/profile.php?id=61574299516724" },
+  { key: "instagram", label: "Instagram", href: "https://www.instagram.com/mrz_mangement_services/" },
+] as const;

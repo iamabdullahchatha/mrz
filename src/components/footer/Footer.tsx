@@ -5,7 +5,8 @@ import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { industries } from "@/data/industries";
 import { services } from "@/data/services";
-import { CONTACT, ROUTES } from "@/lib/routes";
+import { CONTACT, ROUTES, SOCIAL_LINKS } from "@/lib/routes";
+import { SOCIAL_ICONS } from "@/components/common/kitIcons";
 import { TiltCard } from "@/components/sections/TiltCard";
 import styles from "./Footer.module.css";
 
@@ -174,6 +175,28 @@ export function Footer() {
                   </span>
                 </li>
               </ul>
+              <div className={styles.social}>
+                <span className={styles.contactLabel}>Follow us</span>
+                <ul className={styles.socialList}>
+                  {SOCIAL_LINKS.map((s) => {
+                    const Icon = SOCIAL_ICONS[s.key];
+                    return (
+                      <li key={s.key}>
+                        <a
+                          href={s.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.socialLink}
+                          aria-label={`MRZ on ${s.label} (opens in a new tab)`}
+                          title={s.label}
+                        >
+                          <Icon />
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             </TiltCard>
           </motion.div>
 

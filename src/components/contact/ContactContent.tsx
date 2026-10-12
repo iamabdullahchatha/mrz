@@ -4,13 +4,13 @@ import { useRef, useState, type ChangeEvent, type CSSProperties, type FormEvent 
 import Link from "next/link";
 import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
 import kit from "@/components/common/PageKit.module.css";
-import { Arrow, ArrowUpRight, Check, ChevronDown, Mail, Phone, Pin } from "@/components/common/kitIcons";
+import { Arrow, ArrowUpRight, Check, ChevronDown, Mail, Phone, Pin, SOCIAL_ICONS } from "@/components/common/kitIcons";
 import { useSpotlight } from "@/components/common/useSpotlight";
 import { pad2 } from "@/components/header/motion";
 import { TiltCard } from "@/components/sections/TiltCard";
 import { accentStyle } from "@/data/serviceContent";
 import { services } from "@/data/services";
-import { CONTACT, ROUTES } from "@/lib/routes";
+import { CONTACT, ROUTES, SOCIAL_LINKS } from "@/lib/routes";
 import styles from "./Contact.module.css";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -375,6 +375,34 @@ export function ContactContent() {
                 </motion.li>
               ))}
             </motion.ul>
+
+            <motion.div className={styles.social} {...inViewMotion} variants={v(riseVariants)}>
+              <p className={styles.socialLabel}>Follow MRZ</p>
+              <ul className={styles.socialList}>
+                {SOCIAL_LINKS.map((s) => {
+                  const Icon = SOCIAL_ICONS[s.key];
+                  return (
+                    <li key={s.key}>
+                      <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.socialLink}
+                        aria-label={`Follow MRZ on ${s.label} (opens in a new tab)`}
+                      >
+                        <span className={styles.socialIcon} aria-hidden="true">
+                          <Icon />
+                        </span>
+                        {s.label}
+                        <span className={styles.socialGo} aria-hidden="true">
+                          <ArrowUpRight size={14} />
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </motion.div>
           </div>
 
           {/* form */}
